@@ -4,7 +4,7 @@ import uuid
 class Session:
 
     def __init__(self):
-        self._sid = uuid.uuid4()
+        self._sid = str(uuid.uuid4())
         self._data = dict()
 
     def get_sid(self):
@@ -28,14 +28,18 @@ class _SessionManager:
         return session
 
     def get_session(self, sid):
-        return self.sessions[sid]
+        if sid in self.sessions:
+            return self.sessions[sid]
+        else:
+            return None
 
 
 _sessionManager = _SessionManager()
 
 
+def new_session():
+    return _sessionManager.new_session()
+
+
 def get_session(sid):
-    if sid == None:
-        return _sessionManager.new_session()
-    else:
-        return _sessionManager.get_session(sid)
+    return _sessionManager.get_session(sid)
