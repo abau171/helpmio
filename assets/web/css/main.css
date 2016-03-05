@@ -1,0 +1,120 @@
+
+/*  =============== 
+    ==== FONTS ====
+    ===============
+*/
+
+@font-face {
+    font-family: navFont;
+    src: url("../fonts/American Captain.ttf");
+}
+
+html {
+    height: 100%;
+}
+
+/*  ============== 
+    ==== BODY ====
+    ==============
+*/
+
+body {
+    height: 100%;
+    background-color: #4d75b3;
+    margin: 0;
+    padding: 0;
+}
+
+/*  ================ 
+    ==== HEADER ====
+    ================
+*/
+
+header {
+    height: 100px;
+    background-color: #333;
+}
+
+header #max {
+    position: relative;
+    margin: 0 auto;
+    max-width: 1000px;
+}
+
+header #logo {
+    position: absolute;
+    left: 50%;
+    margin-left: -50px;
+    text-indent: 1000px;
+    overflow: hidden;
+    display: block;
+    height: 100px;
+    width: 100px;
+    background: url("../images/Logo_noChain.png") no-repeat;
+}
+
+header .nav {
+    position: absolute;
+    height: 50px;
+    margin-top: 25px;
+
+    font-family: navFont;
+    font-size: 30px;
+    color: white;
+}
+
+header .nav a {
+    color: white;
+}
+
+header .nav a:link {
+    text-decoration: none;
+}
+
+header .nav a:visited {
+    text-decoration: none;
+}
+
+header .nav a:hover {
+    text-decoration: underline;
+}
+
+header .nav a:active {
+    text-decoration: underline;
+}
+
+header #left_nav {
+    left: 0;
+}
+
+header #right_nav {
+    right: 0;
+}
+
+/*  ================= 
+    ==== CONTENT ====
+    =================
+*/
+
+#content-container {
+    position: relative;
+    height: calc(100% - 100px);
+}
+
+#sidebar {
+    position: absolute;
+    left: 0;
+    width: 40px;
+    height: 100%;
+    background-color: #444444;
+}
+
+#content {
+    position: absolute;
+    left: 40px;
+    margin-left: 10px;
+    margin-top: 10px;
+    width: calc(100% - 40px - 10px - 10px);
+    height: 500px;
+    background: #809fff;
+}
