@@ -1,3 +1,4 @@
+import helpmio.session
 import os
 import tornado.httpserver
 import tornado.web
@@ -17,7 +18,18 @@ def init(port):
     server.listen(port)
 
 
-class QuestionsHandler(tornado.web.RequestHandler):
+class BaseHandler(tornado.web.RequestHandler):
+
+    def prepare(self):
+        sid = self.get_cookie("sid", None)
+        session = helpmio.session.get_session(sid)
+        if session is None:
+            session = helpmio.session.new_session()
+            self.set_cookie("sid", session.get_sid())
+        self.session = session
+
+
+class QuestionsHandler(BaseHandler):
 
     def get(self):
         self.render("questions.html")
