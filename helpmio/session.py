@@ -1,13 +1,13 @@
 import uuid
 
 
-class _Session:
+class Session:
 
     def __init__(self):
         self._sid = uuid.uuid4()
         self._data = dict()
 
-    def getSid(self):
+    def get_sid(self):
         return self._sid
 
     def __getitem__(self, key):
@@ -22,19 +22,20 @@ class _SessionManager:
     def __init__(self):
         self.sessions = dict()
 
-    def newSession(self):
-        session = _Session()
-        self.sessions[session.getSid()] = session
+    def new_session(self):
+        session = Session()
+        self.sessions[session.get_sid()] = session
         return session
 
-    def getSession(self, sid):
+    def get_session(self, sid):
         return self.sessions[sid]
 
 
 _sessionManager = _SessionManager()
 
-def getSession(sid):
+
+def get_session(sid):
     if sid == None:
-        return _sessionManager.newSession()
+        return _sessionManager.new_session()
     else:
-        return _sessionManager.getSession(sid)
+        return _sessionManager.get_session(sid)
