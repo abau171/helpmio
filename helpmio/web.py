@@ -132,8 +132,8 @@ class QuestionWebSocketHandler(tornado.websocket.WebSocketHandler):
     @_inject_sessions
     def open(self, qid):
         self._nickname = self.session["nickname"]
-        question = helpmio.question.get_question(qid)
-        self._chatroom = question.get_chatroom()
+        self._question = helpmio.question.get_question(qid)
+        self._chatroom = self._question.get_chatroom()
         self._connection_id = self._chatroom.connect(self._nickname)
         self._connect_cid = self._chatroom.on_connect.subscribe(self.connect_recieved)
         self._disconnect_cid = self._chatroom.on_disconnect.subscribe(self.disconnect_recieved)
@@ -157,7 +157,7 @@ class QuestionWebSocketHandler(tornado.websocket.WebSocketHandler):
             else:
                 print("user cannot send message without nickname")
         elif message_type == "resolve":
-            self._chatroom.set_resolved()
+            self._question.set_resolved()
         else:
             print("invalid client message type: '{}'".format(message_type))
 
