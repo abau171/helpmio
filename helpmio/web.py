@@ -196,7 +196,7 @@ class NotificationWebSocketHandler(tornado.websocket.WebSocketHandler):
             self._chat_cids[qid] = chatroom.on_chat.subscribe(lambda chat: self.notification_recieved(qid, chat[0]), "chat")
 
     def on_close(self):
-        for qid in self._qids:
+        for qid in self._connect_cids:
             chatroom = helpmio.question.get_question(qid).get_chatroom()
             chatroom.on_connect.unsubscribe(self._connect_cids[qid])
             chatroom.on_disconnect.unsubscribe(self._disconnect_cids[qid])
