@@ -26,7 +26,7 @@
         web_socket.send(JSON.encode({
             'type': 'message',
             'data': message
-        });
+        }));
         chat_input.focus();
     });
 
