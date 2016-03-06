@@ -5,7 +5,8 @@
         web_socket,
         chat_div = document.getElementById('chat-content'),
         chat_input = document.getElementById('chat-input'),
-        connected_users = {};
+        users = {},
+        active_users = [];
 
     function addMessage(message) {
         chat_div.textContent += message + '\n';
@@ -38,6 +39,7 @@
                     message = history[i][1];
                 addMessage(userName + ': ' + message);
             }
+            active_users.concat(data['onlinelist']);
         } else if (obj['type'] === 'message') {
             var userName = connected_users[data['connection_id']]['nickname'],
                 message = data['message'];
@@ -47,10 +49,12 @@
                 'nickname': data['nickname'],
                 'is_asker': data['is_asker']
             };
+            active_users.push(data['connection_id']);
             addMessage(data['nickname'] + ' connected.');   
         } else if (obj['type'] === 'disconnect') {
+            var index = active_users.indexOf(data['connection_id']);
+            active_users.splice(index, 1);
             addMessage(connected_users[data['connection_id']]['nickname'] + ' disconnected.');
-            delete connected_users[data['connection_id']];
         }
     };
 
