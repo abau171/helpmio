@@ -156,6 +156,8 @@ class QuestionWebSocketHandler(tornado.websocket.WebSocketHandler):
                 self._chatroom.add_chat(self._connection_id, data)
             else:
                 print("user cannot send message without nickname")
+        elif message_type == "resolve":
+            self._chatroom.set_resolved()
         else:
             print("invalid client message type: '{}'".format(message_type))
 
