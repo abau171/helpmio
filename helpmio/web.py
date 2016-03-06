@@ -106,9 +106,9 @@ class NewQuestionHandler(BaseHandler):
                 title_error=title_error, description_error=description_error,
                 title=title, description=description, tags=tags)
             return
-        self.redirect(self.reverse_url("question",
-            helpmio.question.new_question(
-                nickname, title, description, re.split(r"[, ]+", tags)).get_qid()))
+        new_question = helpmio.question.new_question(nickname, title, description, re.split(r"[, ]+", tags))
+        self.session["watched"].add(new_question.get_qid())
+        self.redirect(self.reverse_url("question", new_question.get_qid()))
 
 
 class QuestionHandler(BaseHandler):
