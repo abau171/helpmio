@@ -34,12 +34,12 @@ class _SessionManager:
             return None
 
 
-_sessionManager = _SessionManager()
+_session_manager = _SessionManager()
 
 
 def new_session():
-    return _sessionManager.new_session()
+    return _session_manager.new_session()
 
 
 def get_session(sid):
-    return _sessionManager.get_session(sid)
+    return _session_manager.get_session(sid)
