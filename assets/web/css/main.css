@@ -121,6 +121,14 @@ header #right_nav {
     text-align: right;
 }
 
+header #watch {
+    background: url("../images/notification.png") no-repeat;
+    margin-top: -4px;
+    right: 150px;
+    width: 30px;
+    height: 30px;
+}
+
 #logged_in_info {
     font-size: 18px;
 }
@@ -181,4 +189,41 @@ form input[type="submit"]:hover {
     cursor: pointer;
     background-color: #df6c20;
     transition: background-color 0.3s ease 0s, box-shadow 0.3s ease 0s;
+}
+
+/**/
+
+#note-overlay {
+    position: fixed;
+    top: 100px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: black;
+    opacity: 0.5;
+    z-index: 97;
+    transition: all 0.3s ease 0s;
+}
+
+#note-overlay.hidden {
+    display: none;
+    opacity: 0;
+    transition: all 0.3s ease 0s;
+}
+
+#note-panel {
+    position: fixed;
+    left: calc(50% - 300px);
+    width:600px;
+    height: 400px;
+    margin: 10px;
+    color: #EEE;
+    font-family: mainFont;
+    background: #222;
+    z-index: 98;
+    transition: right 0.3s ease 0s;
+}
+
+#note-panel.hidden {
+    right: -300px;
 }

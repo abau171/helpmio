@@ -15,6 +15,9 @@
 
     <body>
 
+        <div id="note-overlay"></div>
+        <div id="note-panel"></div>
+
         <header>
 
             <div class="max">
@@ -29,6 +32,7 @@
                 <!-- Right alligned -->
                 <nav class="nav" id="right_nav">
                     {% if session['logged_in'] %}
+                        <nav class="nav" id="watch"></nav>
                         <div id="logged_in_info">
                             Welcome, {{ session['nickname'] }}!<br>
                             <a href="{{ reverse_url('login') }}?lo=1">Logout</a>
