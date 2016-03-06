@@ -2,6 +2,7 @@ import helpmio.session
 import os
 import tornado.httpserver
 import tornado.web
+import tornado.websocket
 
 def init(port):
     template_path = os.path.join(
@@ -54,5 +55,5 @@ class QuestionHandler(tornado.web.RequestHandler):
         self.write("Question")
 
 
-class WebSocketHandler(tornado.web.WebSocketHandler):
+class WebSocketHandler(tornado.websocket.WebSocketHandler):
     pass
