@@ -1,0 +1,12 @@
+#new-question-wrapper {
+    text-align: right;
+}
+
+#new-question-wrapper a {
+    font-size: 20px;
+    color: white;
+}
+
+#new-question-wrapper a:hover {
+    text-decoration: none;
+}

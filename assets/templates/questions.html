@@ -1,5 +1,12 @@
 {% extends "base.html" %}
 
+{% block head %}
+    <link rel="stylesheet" href="{{ reverse_url('static', 'css/questions.css') }}">
+{% end %}
+
 {% block content %}
+    <div id="new-question-wrapper">
+        <a href="{{ reverse_url('new_question') }}">New Question</a>
+    </div>
     <h1>Questions</h1>
 {% end %}
