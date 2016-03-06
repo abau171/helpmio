@@ -167,6 +167,8 @@ class QuestionWebSocketHandler(tornado.websocket.WebSocketHandler):
 
     def chat_recieved(self, chat):
         sender_connection_id, text = chat
+        if text == "":
+            return
         nickname = self._chatroom.get_user(sender_connection_id)
         if nickname != None:
             message = {"type": "message", "data": {"connection_id": sender_connection_id, "message": text}}
