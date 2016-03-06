@@ -30,7 +30,7 @@ def _inject_sessions(func):
             session = helpmio.session.new_session()
             self.set_cookie("sid", session.get_sid())
         self.session = session
-        func()
+        func(self)
     return inner
 
 
