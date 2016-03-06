@@ -63,3 +63,53 @@
     margin-top: -14px;
     width: 60px;
 }
+
+#info-button {
+    position: fixed;
+    top: 110px;
+    right: 10px;
+    height: 30px;
+    width: 30px;
+    font-size: 25px;
+    line-height: 30px;
+    background: white;
+    border-radius: 15px;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    z-index: 99;
+}
+
+#info-overlay {
+    position: fixed;
+    top: 100px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: black;
+    opacity: 0.15;
+    z-index: 97;
+}
+
+#info-overlay.hidden {
+    display: none;
+}
+
+#info-panel {
+    position: fixed;
+    top: 100px;
+    bottom: 0;
+    right: 0;
+    width: 300px;
+    background: white;
+    z-index: 98;
+}
+
+#info-panel.hidden {
+    display: none;
+}
+
+#info-panel h2 {
+    margin-top: 10px;
+    margin-left: 10px;
+}

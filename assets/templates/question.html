@@ -16,6 +16,13 @@
 {% end %}
 
 {% block end_body %}
+    <a href="#" id="info-button">i</a>
+    <div id="info-overlay" class="hidden"></div>
+    <div id="info-panel" class="hidden">
+        <h2>Connected Users</h2>
+        <ul id="connected-users"></ul>
+    </div>
+
     <script>
         var socket_url_path = "{{ reverse_url('question_websocket', question.get_qid()) }}";
     </script>

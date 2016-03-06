@@ -5,6 +5,9 @@
         web_socket,
         chat_div = document.getElementById('chat-content'),
         chat_input = document.getElementById('chat-input'),
+        connected_users_list = document.getElementById('connected-users'),
+        info_overlay = document.getElementById('info-overlay'),
+        info_panel = document.getElementById('info-panel'),
         users = {},
         active_users = [];
 
@@ -20,6 +23,17 @@
         p.appendChild(span);
         p.appendChild(document.createTextNode(' ' + message));
         chat_div.appendChild(p);
+    }
+
+    function addUser(connection_id, username) {
+        var li = document.createElement("li");
+        li.id = 'connected-users-list-' + connection_id;
+        li.appendChild(document.createTextNode(username));
+        connected_users_list.appendChild(li);
+    }
+
+    function removeUser(connection_id) {
+        document.getElementById('connected-users-list-' + connection_id).remove();
     }
 
     if (window.location.protocol === 'https:') {
@@ -53,7 +67,11 @@
                 }
                 addMessage(type, user['nickname'], message);
             }
-            active_users.concat(data['onlinelist']);
+            active_users = active_users.concat(data['onlinelist']);
+            for (var i in active_users) {
+                var connection_id = active_users[i];
+                addUser(connection_id, users[connection_id]['nickname']);
+            }
         } else if (obj['type'] === 'message') {
             var user = users[data['connection_id']],
                 message = data['message'],
@@ -68,10 +86,12 @@
                 'is_asker': data['is_asker']
             };
             active_users.push(data['connection_id']);
+            addUser(data['connection_id'], data['nickname']);
             addMessage('meta', data['nickname'], 'connected.');   
         } else if (obj['type'] === 'disconnect') {
             var index = active_users.indexOf(data['connection_id']);
             active_users.splice(index, 1);
+            removeUser(data['connection_id']);
             addMessage('meta', users[data['connection_id']]['nickname'], 'disconnected.');
         }
     };
@@ -85,6 +105,22 @@
             'data': message
         }));
         chat_input.focus();
+    });
+
+    function toggleInfoPanel() {
+        if (info_panel.className === 'hidden') {
+            info_overlay.className = '';
+            info_panel.className = '';
+        } else {
+            info_overlay.className = 'hidden';
+            info_panel.className = 'hidden';
+        }
+    }
+
+    info_overlay.addEventListener('click', toggleInfoPanel);
+    document.getElementById('info-button').addEventListener('click', function (e) {
+        e.preventDefault();
+        toggleInfoPanel();
     });
 
 })();
