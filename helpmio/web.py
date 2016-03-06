@@ -173,3 +173,33 @@ class QuestionWebSocketHandler(tornado.websocket.WebSocketHandler):
         if nickname != None:
             message = {"type": "message", "data": {"connection_id": sender_connection_id, "message": text}}
             self.write_message(json.dumps(message))
+
+
+class NotificationWebSocketHandler(tornado.websocket.WebSocketHandler):
+    
+    @_inject_sessions
+    def open(self):
+        self._connect_cids = dict()
+        self._disconnect_cids = dict()
+        self._chat_cids = dict()
+        for qid in self._qids:
+            chatroom = helpmio.question.get_question(qid).get_chatroom()
+            self._connect_cids[qid] = chatroom.on_connect.subscribe(lambda connected_id: self.notification_recieved(qid, connected_id, "connect"))
+            self._disconnect_cids[qid] = chatroom.on_disconnect.subscribe(lambda disconnected_id: self.notification_recieved(qid, disconnected_id, "disconnect"))
+            self._chat_cids[qid] = chatroom.on_chat.subscribe(lambda chat: self.notification_recieved(qid, chat[0]), "chat")
+
+    def on_close(self):
+        for qid in self._qids:
+            chatroom = helpmio.question.get_question(qid).get_chatroom()
+            chatroom.on_connect.unsubscribe(self._connect_cids[qid])
+            chatroom.on_disconnect.unsubscribe(self._disconnect_cids[qid])
+            chatroom.on_chat.unsubscribe(self._chat_cids[qid])
+
+    def notification_recieved(self, qid, connection_id, activity):
+        q = question.get_question(qid)
+        message = {"type": "connect", "data": {
+            "qid": qid,
+            "nickname": q.get_chatroom().get_user(connection_id),
+            "activity": activity
+            }}
+        self.write_message(json.dumps(message))
