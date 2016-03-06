@@ -150,10 +150,10 @@ class QuestionWebSocketHandler(tornado.websocket.WebSocketHandler):
         elif message_type == "resolve":
             self._question.set_resolved()
         elif message_type == "watch":
-            self.session["watched"].add(data)
+            self.session["watched"].add(self._question.get_qid())
         elif message_type == "unwatch":
-            if data in self.session["watched"]:
-                self.session["watched"].remove(data)
+            if self._question.get_qid() in self.session["watched"]:
+                self.session["watched"].remove(self._question.get_qid())
         else:
             print("invalid client message type: '{}'".format(message_type))
 
