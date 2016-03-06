@@ -43,7 +43,7 @@
     </div>
 
     <script>
-        var socket_url_path = "{{ reverse_url('question_websocket', question.get_qid()) }}";
+        var question_socket_url_path = "{{ reverse_url('question_websocket', question.get_qid()) }}";
     </script>
     <script src="{{ reverse_url('static', 'js/question.js') }}"></script>
 {% end %}

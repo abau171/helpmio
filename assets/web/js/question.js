@@ -47,7 +47,7 @@
         socket_url = 'ws:';
     }
     socket_url += '//' + window.location.host;
-    socket_url += socket_url_path;
+    socket_url += question_socket_url_path;
 
     web_socket = new WebSocket(socket_url);
     web_socket.onmessage = function (msg) {

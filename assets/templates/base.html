@@ -50,6 +50,8 @@
 
         </section>
 
+        <script>var notify_socket_url_path = "{{ reverse_url('notify_websocket') }}";</script>
+        <script src="{{ reverse_url('static', 'js/notify.js') }}"></script>
         {% block end_body %}{% end %}
 
     </body>

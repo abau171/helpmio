@@ -22,6 +22,7 @@ def init(port):
         tornado.web.url(r"/login", LoginHandler, name="login"),
         tornado.web.url(r"/questions/new", NewQuestionHandler, name="new_question"),
         tornado.web.url(r"/questions/([^/]+)", QuestionHandler, name="question"),
+        tornado.web.url(r"/ws/notify", NotificationWebSocketHandler, name="notify_websocket"),
         tornado.web.url(r"/ws/(.*)", QuestionWebSocketHandler, name="question_websocket"),
         tornado.web.url(r"/assets/(.*)", tornado.web.StaticFileHandler, {"path": static_files_path}, name="static"),
         tornado.web.url(r"/(favicon\.ico)", tornado.web.StaticFileHandler, {"path": favicon_path}, name="favicon")
@@ -193,7 +194,7 @@ class NotificationWebSocketHandler(tornado.websocket.WebSocketHandler):
             chatroom = helpmio.question.get_question(qid).get_chatroom()
             self._connect_cids[qid] = chatroom.on_connect.subscribe(lambda connected_id: self.notification_recieved(qid, connected_id, "connect"))
             self._disconnect_cids[qid] = chatroom.on_disconnect.subscribe(lambda disconnected_id: self.notification_recieved(qid, disconnected_id, "disconnect"))
-            self._chat_cids[qid] = chatroom.on_chat.subscribe(lambda chat: self.notification_recieved(qid, chat[0]), "chat")
+            self._chat_cids[qid] = chatroom.on_chat.subscribe(lambda chat: self.notification_recieved(qid, chat[0], "chat"))
 
     def on_close(self):
         for qid in self._connect_cids:
@@ -203,8 +204,8 @@ class NotificationWebSocketHandler(tornado.websocket.WebSocketHandler):
             chatroom.on_chat.unsubscribe(self._chat_cids[qid])
 
     def notification_recieved(self, qid, connection_id, activity):
-        q = question.get_question(qid)
-        message = {"type": "connect", "data": {
+        q = helpmio.question.get_question(qid)
+        message = {"type": "notify", "data": {
             "qid": qid,
             "nickname": q.get_chatroom().get_user(connection_id),
             "activity": activity
