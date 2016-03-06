@@ -121,10 +121,12 @@ header #right_nav {
     text-align: right;
 }
 
-header #watch {
+header #open-notify-dialog {
+    position: absolute;
+    display: inline-block;
     background: url("../images/notification.png") no-repeat;
     margin-top: -4px;
-    right: 150px;
+    right: 200px;
     width: 30px;
     height: 30px;
 }
@@ -225,5 +227,9 @@ form input[type="submit"]:hover {
 }
 
 #note-panel.hidden {
-    right: -300px;
+    display: none;
+}
+
+#note-panel p {
+    color: white;
 }

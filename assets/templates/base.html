@@ -15,8 +15,8 @@
 
     <body>
 
-        <div id="note-overlay"></div>
-        <div id="note-panel"></div>
+        <div id="note-overlay" class="hidden"></div>
+        <div id="note-panel" class="hidden"></div>
 
         <header>
 
@@ -32,7 +32,7 @@
                 <!-- Right alligned -->
                 <nav class="nav" id="right_nav">
                     {% if session['logged_in'] %}
-                        <nav class="nav" id="watch"></nav>
+                        <a href="#" id="open-notify-dialog"></a>
                         <div id="logged_in_info">
                             Welcome, {{ session['nickname'] }}!<br>
                             <a href="{{ reverse_url('login') }}?lo=1">Logout</a>
