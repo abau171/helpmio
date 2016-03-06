@@ -6,6 +6,7 @@ class Session:
     def __init__(self):
         self._sid = str(uuid.uuid4())
         self._data = dict()
+        self["watched"] = set()
 
     def get_sid(self):
         return self._sid

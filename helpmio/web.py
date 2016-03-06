@@ -149,6 +149,11 @@ class QuestionWebSocketHandler(tornado.websocket.WebSocketHandler):
                 print("user cannot send message without nickname")
         elif message_type == "resolve":
             self._question.set_resolved()
+        elif message_type == "watch":
+            self.session["watched"].add(data)
+        elif message_type == "unwatch":
+            if data in self.session["watched"]:
+                self.session["watched"].remove(data)
         else:
             print("invalid client message type: '{}'".format(message_type))
 
@@ -184,7 +189,7 @@ class NotificationWebSocketHandler(tornado.websocket.WebSocketHandler):
         self._connect_cids = dict()
         self._disconnect_cids = dict()
         self._chat_cids = dict()
-        for qid in self._qids:
+        for qid in self.session["watched"]:
             chatroom = helpmio.question.get_question(qid).get_chatroom()
             self._connect_cids[qid] = chatroom.on_connect.subscribe(lambda connected_id: self.notification_recieved(qid, connected_id, "connect"))
             self._disconnect_cids[qid] = chatroom.on_disconnect.subscribe(lambda disconnected_id: self.notification_recieved(qid, disconnected_id, "disconnect"))
