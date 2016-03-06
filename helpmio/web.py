@@ -76,7 +76,8 @@ class QuestionWebSocketHandler(tornado.websocket.WebSocketHandler):
         self._disconnect_cid = self._chatroom.on_disconnect.subscribe(self.disconnect_recieved)
         self._chat_cid = self._chatroom.on_chat.subscribe(self.chat_recieved)
         userlist = [{"connection_id": connection_id, "nickname": connection_id, "is_asker": False} for connection_id in question.get_chatroom().get_connected_users()]
-        message = {"type": "userlist", "data": userlist}
+        chat_history = self._chatroom.get_chat_history()
+        message = {"type": "userlist", "data": {"userlist": userlist, "history": chat_history}}
         self.write_message(json.dumps(message))
 
     def on_message(self, message):

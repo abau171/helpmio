@@ -29,4 +29,4 @@ class ChatRoom:
         return dict(self._connected_users)
 
     def get_chat_history(self):
-        return self._chat_history
+        return self._chat_history[:]
