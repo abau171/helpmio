@@ -10,6 +10,7 @@ h1 {
 }
 
 #new-question-wrapper a {
+    box-shadow: 0px 0px 8px #222222;
 	padding: 10px;
 	background-color: #333;
 	font-family: mainFont;
@@ -23,6 +24,7 @@ h1 {
 }
 
 #new-question-wrapper a:hover {
+    box-shadow: 0px 0px 8px #d26f2d;
 	background-color: #df6c20;
     text-decoration: none;
 }
@@ -43,15 +45,17 @@ h1 {
 }
 
 #question-list li {
-	border-style: groove;
-	border-width: 3px;
-	border-color: #476085;
-
+    box-shadow: 0px 0px 8px #222222;
     margin-top: 10px;
     padding-left: 20px;
     padding-top: 20px;
     height: 100px;
-    background: #9DA6BF;
+    background: #AFA5A0;
+}
+
+#question-list li:hover {
+    box-shadow: 0px 0px 8px #d26f2d;
+    transition: background-color 0.3s ease 0s;
 }
 
 #question-list li h2 {

@@ -23,6 +23,7 @@
 }
 
 #new_question input[type="submit"] {
+	box-shadow: 0px 0px 8px #222222;
 	border: 0;
 	padding: 10px;
 	background-color: #333;
@@ -31,7 +32,8 @@
 }
 
 #new_question input[type="submit"]:hover {
+    box-shadow: 0px 0px 8px #d26f2d;
 	cursor: pointer;
 	background-color: #df6c20;
-    transition: background-color 0.3s ease 0s;
+    transition: background-color 0.3s ease 0s, box-shadow 0.3s ease 0s;
 }
