@@ -1,9 +1,6 @@
 
-#new_question {
-	font-family: mainFont;
-}
-
 #new_question label {
+	font-family: mainFont;
 	display: block;
 	margin-bottom: 10px;
 	font-size: 30px;
@@ -18,6 +15,7 @@
 }
 
 #new_question textarea {
+	font-family: mainFont;
 	font-size: 20px;
 	width: 100%;
 }
