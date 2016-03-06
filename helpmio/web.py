@@ -4,6 +4,7 @@ import os
 import tornado.httpserver
 import tornado.web
 import tornado.websocket
+import json
 
 def init(port):
     template_path = os.path.join(
@@ -68,18 +69,15 @@ class QuestionWebSocketHandler(tornado.websocket.WebSocketHandler):
     
     @_inject_sessions
     def open(self, qid):
-        self._chatroom = helpmio.question.get_question(qid).get_chatroom()
+        question = helpmio.question.get_question(qid)
+        self._chatroom = question.get_chatroom()
         self._connection_id = self._chatroom.connect(self)
-        def connect_recieved(connected_id):
-            self.write_message("{} joined the chat.".format(connected_id))
-        def disconnect_recieved(disconnected_id):
-            self.write_message("{} disconnected.".format(disconnected_id))
-        def chat_recieved(chat):
-            sender_connection_id, text = chat
-            self.write_message("{}: {}".format(sender_connection_id, text))
-        self._connect_cid = self._chatroom.on_connect.subscribe(connect_recieved)
-        self._disconnect_cid = self._chatroom.on_disconnect.subscribe(disconnect_recieved)
-        self._chat_cid = self._chatroom.on_chat.subscribe(chat_recieved)
+        self._connect_cid = self._chatroom.on_connect.subscribe(self.connect_recieved)
+        self._disconnect_cid = self._chatroom.on_disconnect.subscribe(self.disconnect_recieved)
+        self._chat_cid = self._chatroom.on_chat.subscribe(self.chat_recieved)
+        userlist = [{"connection_id": connection_id, "nickname": connection_id, "is_asker": False} for connection_id in question.get_chatroom().get_connected_users()]
+        message = {"type": "userlist", "data": userlist}
+        self.write_message(json.dumps(message))
 
     def on_message(self, message):
         self._chatroom.add_chat(self._connection_id, message)
@@ -89,3 +87,16 @@ class QuestionWebSocketHandler(tornado.websocket.WebSocketHandler):
         self._chatroom.on_disconnect.unsubscribe(self._disconnect_cid)
         self._chatroom.on_chat.unsubscribe(self._chat_cid)
         self._chatroom.disconnect(self._connection_id)
+
+    def connect_recieved(self, connected_id):
+        message = {"type": "connect", "data": {"connection_id": connected_id, "nickname": connected_id, "is_asker": False}}
+        self.write_message(json.dumps(message))
+
+    def disconnect_recieved(self, disconnected_id):
+        message = {"type": "disconnect", "data": {"connection_id": disconnected_id}}
+        self.write_message(json.dumps(message))
+
+    def chat_recieved(self, chat):
+        sender_connection_id, text = chat
+        message = {"type": "message", "data": {"connection_id": sender_connection_id, "message": text}}
+        self.write_message(json.dumps(message))

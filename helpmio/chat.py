@@ -25,5 +25,8 @@ class ChatRoom:
         self._chat_history.append(chat)
         self.on_chat(chat)
 
+    def get_connected_users(self):
+        return dict(self._connected_users)
+
     def get_chat_history(self):
         return self._chat_history
