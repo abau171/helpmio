@@ -29,23 +29,23 @@
                 history = data['history'];
             for (var i in userlist) {
                 var user = userlist[i];
-                connected_users[user['connection_id']] = {
+                users[user['connection_id']] = {
                     'nickname': user['nickname'],
                     'is_asker': user['is_asker']
                 };
             }
             for (var i in history) {
-                var userName = connected_users[history[i][0]]['nickname'],
+                var userName = users[history[i][0]]['nickname'],
                     message = history[i][1];
                 addMessage(userName + ': ' + message);
             }
             active_users.concat(data['onlinelist']);
         } else if (obj['type'] === 'message') {
-            var userName = connected_users[data['connection_id']]['nickname'],
+            var userName = users[data['connection_id']]['nickname'],
                 message = data['message'];
             addMessage(userName + ': ' + message);
         } else if (obj['type'] === 'connect') {
-            connected_users[data['connection_id']] = {
+            users[data['connection_id']] = {
                 'nickname': data['nickname'],
                 'is_asker': data['is_asker']
             };
@@ -54,7 +54,7 @@
         } else if (obj['type'] === 'disconnect') {
             var index = active_users.indexOf(data['connection_id']);
             active_users.splice(index, 1);
-            addMessage(connected_users[data['connection_id']]['nickname'] + ' disconnected.');
+            addMessage(users[data['connection_id']]['nickname'] + ' disconnected.');
         }
     };
 
