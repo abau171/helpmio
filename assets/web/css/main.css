@@ -25,6 +25,14 @@ body {
     padding: 0;
 }
 
+p {
+    font-family: mainFont;
+}
+
+.error {
+    color: white;
+}
+
 /*  ================ 
     ==== HEADER ====
     ================
