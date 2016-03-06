@@ -25,7 +25,7 @@ def init(port):
         tornado.web.url(r"/ws/(.*)", QuestionWebSocketHandler, name="question_websocket"),
         tornado.web.url(r"/assets/(.*)", tornado.web.StaticFileHandler, {"path": static_files_path}, name="static"),
         tornado.web.url(r"/(favicon\.ico)", tornado.web.StaticFileHandler, {"path": favicon_path}, name="favicon")
-    ], template_path=template_path, debug=True)
+    ], template_path=template_path)
     server = tornado.httpserver.HTTPServer(app)
     server.listen(port)
 
