@@ -131,6 +131,10 @@ header #open-notify-dialog {
     height: 30px;
 }
 
+header #open-notify-dialog.alert {
+    background: url("../images/notification_orange.png") no-repeat;
+}
+
 #logged_in_info {
     font-size: 18px;
 }
@@ -224,12 +228,11 @@ form input[type="submit"]:hover {
     background: #222;
     z-index: 98;
     transition: right 0.3s ease 0s;
+    color: white;
+    padding: 0 20px;
+    overflow: auto;
 }
 
 #note-panel.hidden {
     display: none;
-}
-
-#note-panel p {
-    color: white;
 }

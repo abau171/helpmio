@@ -17,7 +17,19 @@
 
     web_socket = new WebSocket(socket_url);
     web_socket.onmessage = function (msg) {
-        console.log(msg);
+        var obj = JSON.parse(msg.data),
+            data = obj['data'];
+        if (obj['type'] === 'notify') {
+            var p = document.createElement('p'),
+                text = data['activity'] + ': (' + data['qid'] + ', ' + data['nickname'] + ')';
+            p.appendChild(document.createTextNode(text));
+            note_panel.appendChild(p);
+            if (note_panel.className === 'hidden') {
+                if (open_notify_dialog) {
+                    open_notify_dialog.className = 'alert';
+                }
+            }
+        }
     };
 
     function toggleNotifyDialog() {
@@ -32,9 +44,12 @@
 
     note_overlay.addEventListener('click', toggleNotifyDialog);
 
-    open_notify_dialog.addEventListener('click', function (e) {
-        e.preventDefault();
-        toggleNotifyDialog();
-    });
+    if (open_notify_dialog) {
+        open_notify_dialog.addEventListener('click', function (e) {
+            e.preventDefault();
+            open_notify_dialog.className = '';
+            toggleNotifyDialog();
+        });
+    }
 
 })();
