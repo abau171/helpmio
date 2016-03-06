@@ -9,19 +9,14 @@
     src: url("../fonts/SourceCodePro-Regular.otf");
 }
 
-html {
-    height: 100%;
-}
-
 /*  ============== 
     ==== BODY ====
     ==============
 */
 
 body {
-    height: 100%;
     background-color: #4d75b3;
-    margin: 0;
+    margin: 120px 0 0 0;
     padding: 0;
 }
 
@@ -31,11 +26,16 @@ body {
 */
 
 header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
     height: 100px;
     background-color: #333;
+    z-index: 100;
 }
 
-header #max {
+.max {
     position: relative;
     margin: 0 auto;
     max-width: 1000px;
@@ -96,25 +96,26 @@ header #right_nav {
     =================
 */
 
-#content-container {
-    position: relative;
-    height: calc(100% - 100px);
+@media screen and (max-width: 1150px) {
+    #content {
+        width: calc(100% - 60px);
+        margin-left: 50px;
+    }
 }
 
 #sidebar {
-    position: absolute;
+    position: fixed;
     left: 0;
+    top: 100px;
     width: 40px;
-    height: 100%;
+    height: calc(100% - 100px);
     background-color: #444444;
 }
 
-#content {
-    position: absolute;
-    left: 40px;
-    margin-left: 10px;
+.question {
     margin-top: 10px;
-    width: calc(100% - 40px - 10px - 10px);
-    height: 500px;
+    padding-left: 20px;
+    padding-top: 20px;
+    height: 100px;
     background: #809fff;
 }
