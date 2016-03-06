@@ -4,13 +4,13 @@ import helpmio.chat
 
 class Question:
 
-    def __init__(self, title, description, tags):
+    def __init__(self, asker_name, title, description, tags):
         self._qid = str(uuid.uuid4())
         self._title = title
         self._description = description
         self._tags = [tag.lower() for tag in tags]
         self._is_resolved = False
-        self._chatroom = helpmio.chat.ChatRoom()
+        self._chatroom = helpmio.chat.ChatRoom(asker_name)
 
     def get_qid(self):
         return self._qid
@@ -42,8 +42,8 @@ class _QuestionManager:
     def __init__(self):
         self._questions = dict()
 
-    def new_question(self, title, description, tags):
-        question = Question(title, description, tags)
+    def new_question(self, asker, title, description, tags):
+        question = Question(asker, title, description, tags)
         self._questions[question.get_qid()] = question
         return question
 
@@ -66,8 +66,8 @@ class _QuestionManager:
 _question_manager = _QuestionManager()
 
 
-def new_question(title, description, tags):
-    return _question_manager.new_question(title, description, tags)
+def new_question(asker, title, description, tags):
+    return _question_manager.new_question(asker, title, description, tags)
 
 
 def get_question(qid):
