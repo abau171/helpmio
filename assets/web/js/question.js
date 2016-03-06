@@ -23,7 +23,7 @@
         e.preventDefault();
         var message = chat_input.value;
         chat_input.value = '';
-        web_socket.send(JSON.encode({
+        web_socket.send(JSON.stringify({
             'type': 'message',
             'data': message
         }));
