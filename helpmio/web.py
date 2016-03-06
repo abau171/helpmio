@@ -70,13 +70,22 @@ class QuestionWebSocketHandler(tornado.websocket.WebSocketHandler):
     def open(self, qid):
         self._chatroom = helpmio.question.get_question(qid).get_chatroom()
         self._connection_id = self._chatroom.connect(self)
-        def message_received(message):
-            print(message)
-            self.write_message(str(message))
-        self._chat_cid = self._chatroom.on_chat.subscribe(message_received)
+        def connect_recieved(connected_id):
+            self.write_message("{} joined the chat.".format(connected_id))
+        def disconnect_recieved(disconnected_id):
+            self.write_message("{} disconnected.".format(disconnected_id))
+        def chat_recieved(chat):
+            sender_connection_id, text = chat
+            self.write_message("{}: {}".format(sender_connection_id, text))
+        self._connect_cid = self._chatroom.on_connect.subscribe(connect_recieved)
+        self._disconnect_cid = self._chatroom.on_disconnect.subscribe(disconnect_recieved)
+        self._chat_cid = self._chatroom.on_chat.subscribe(chat_recieved)
 
     def on_message(self, message):
         self._chatroom.add_chat(self._connection_id, message)
 
     def on_close(self):
+        self._chatroom.on_connect.unsubscribe(self._connect_cid)
+        self._chatroom.on_disconnect.unsubscribe(self._disconnect_cid)
         self._chatroom.on_chat.unsubscribe(self._chat_cid)
+        self._chatroom.disconnect(self._connection_id)
