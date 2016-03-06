@@ -113,12 +113,11 @@
     font-family: mainFont;
     background: #222;
     z-index: 98;
-    transition: width 0.3s ease 0s;
+    transition: right 0.3s ease 0s;
 }
 
 #info-panel.hidden {
-    width: 0;
-    transition: width 0.3s ease 0s;
+    right: -300px;
 }
 
 #info-panel h2 {
