@@ -77,9 +77,9 @@
     width: 30px;
     font-size: 25px;
     line-height: 30px;
-    background: #CCC;
+    background: #444;
     border-radius: 15px;
-    color: black;
+    color: #EEE;
     text-align: center;
     text-decoration: none;
     z-index: 99;
@@ -109,7 +109,7 @@
     bottom: 0;
     right: 0;
     width: 300px;
-    color: #CCC;
+    color: #EEE;
     font-family: mainFont;
     background: #222;
     z-index: 98;
