@@ -117,16 +117,14 @@ header #left_nav {
 }
 
 header #right_nav {
-    right: 0;
+    right: 50px;
     text-align: right;
 }
 
 header #open-notify-dialog {
-    position: absolute;
     display: inline-block;
     background: url("../images/notification.png") no-repeat;
     margin-top: -4px;
-    right: 200px;
     width: 30px;
     height: 30px;
 }
@@ -136,6 +134,7 @@ header #open-notify-dialog.alert {
 }
 
 #logged_in_info {
+    display: inline-block;
     font-size: 18px;
 }
 
@@ -220,7 +219,7 @@ form input[type="submit"]:hover {
 #note-panel {
     position: fixed;
     left: calc(50% - 300px);
-    width:600px;
+    width: 600px;
     height: 400px;
     margin: 10px;
     color: #EEE;
