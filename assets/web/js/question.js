@@ -8,8 +8,18 @@
         users = {},
         active_users = [];
 
-    function addMessage(message) {
-        chat_div.textContent += message + '\n';
+    function addMessage(type, username, message) {
+        var p = document.createElement("p");
+        p.className = type;
+        var span = document.createElement("span");
+        var boldText = username;
+        if (type === 'asker' || type === 'responder') {
+            boldText += ':';
+        }
+        span.appendChild(document.createTextNode(boldText));
+        p.appendChild(span);
+        p.appendChild(document.createTextNode(' ' + message));
+        chat_div.appendChild(p);
     }
 
     if (window.location.protocol === 'https:') {
@@ -35,26 +45,34 @@
                 };
             }
             for (var i in history) {
-                var userName = users[history[i][0]]['nickname'],
-                    message = history[i][1];
-                addMessage(userName + ': ' + message);
+                var user = users[history[i][0]],
+                    message = history[i][1],
+                    type = 'responder';
+                if (user['is_asker']) {
+                    type = 'asker';
+                }
+                addMessage(type, user['nickname'], message);
             }
             active_users.concat(data['onlinelist']);
         } else if (obj['type'] === 'message') {
-            var userName = users[data['connection_id']]['nickname'],
-                message = data['message'];
-            addMessage(userName + ': ' + message);
+            var user = users[data['connection_id']],
+                message = data['message'],
+                type = 'responder';
+            if (user['is_asker']) {
+                type = 'asker';
+            }
+            addMessage(type, user['nickname'], message);
         } else if (obj['type'] === 'connect') {
             users[data['connection_id']] = {
                 'nickname': data['nickname'],
                 'is_asker': data['is_asker']
             };
             active_users.push(data['connection_id']);
-            addMessage(data['nickname'] + ' connected.');   
+            addMessage('meta', data['nickname'], 'connected.');   
         } else if (obj['type'] === 'disconnect') {
             var index = active_users.indexOf(data['connection_id']);
             active_users.splice(index, 1);
-            addMessage(users[data['connection_id']]['nickname'] + ' disconnected.');
+            addMessage('meta', users[data['connection_id']]['nickname'], 'disconnected.');
         }
     };
 
