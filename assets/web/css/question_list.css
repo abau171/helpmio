@@ -65,6 +65,10 @@ h1 {
     transition: box-shadow 0.3s ease 0s;
 }
 
+#question-list li:nth-child(even) {
+    background: #DADADA;
+}
+
 #question-list li:hover {
     box-shadow: 0px 0px 8px #d26f2d;
     transition: box-shadow 0.3s ease 0s;
