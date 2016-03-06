@@ -61,6 +61,10 @@ class LoginHandler(BaseHandler):
 
     @_inject_sessions
     def get(self):
+        if self.get_query_argument("lo", "") == "1":
+            del self.session["logged_in"]
+            del self.session["nickname"]
+            self.redirect(self.reverse_url("main"))
         self.render("login.html")
 
     @_inject_sessions
