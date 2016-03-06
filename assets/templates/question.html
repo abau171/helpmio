@@ -5,7 +5,7 @@
 {% end %}
 
 {% block content %}
-    <pre id="chat-content"></pre>
+    <div id="chat-content"></div>
     <form id="chat-input-form">
         <input type="text" id="chat-input" {% if not session['logged_in'] %}disabled{% end %}>
         <input type="submit" value="&#X27A4;" {% if not session['logged_in'] %}disabled{% end %}>

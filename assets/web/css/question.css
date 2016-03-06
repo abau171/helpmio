@@ -8,6 +8,25 @@
     font-size: 20px;
 }
 
+#chat-content p {
+    margin-top: 5px;
+    margin-bottom: 0px;
+}
+
+#chat-content span {
+    font-weight: bold;
+}
+
+#chat-content .meta {
+    font-size: 15px;
+    font-style: italic;
+    color: #444;
+}
+
+#chat-content .asker {
+    color: #a54a0d;
+}
+
 #chat-input-form {
     display: block;
     position: relative;
