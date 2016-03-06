@@ -10,8 +10,12 @@
         <p class="asker"><span>Description: </span>{{ question.get_description() }}</p>
     </div>
     <form id="chat-input-form">
-        <input type="text" id="chat-input" {% if not session['logged_in'] %}disabled{% end %}>
-        <input type="submit" value="&#X27A4;" {% if not session['logged_in'] %}disabled{% end %}>
+        {% if not question.get_is_resolved() %}
+            <input type="text" id="chat-input" {% if not session['logged_in'] %}disabled{% end %}>
+            <input type="submit" value="&#X27A4;" {% if not session['logged_in'] %}disabled{% end %}>
+        {% else %}
+            This issue has been resolved.
+        {% end %}
     </form>
 {% end %}
 
@@ -19,6 +23,11 @@
     <a href="#" id="info-button">i</a>
     <div id="info-overlay" class="hidden"></div>
     <div id="info-panel" class="hidden">
+        {% if not question.get_is_resolved() %}
+            <p id="resolve-button-wrapper">
+                <a href="{{ reverse_url('resolve_question', question.get_qid()) }}">Resolve</a>
+            </p>
+        {% end %}
         <h2>Connected Users</h2>
         <ul id="connected-users"></ul>
     </div>

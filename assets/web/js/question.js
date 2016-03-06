@@ -123,4 +123,10 @@
         toggleInfoPanel();
     });
 
+    document.querySelector('#resolve-button-wrapper a').addEventListener('click', function (e) {
+        if (!window.confirm("Are you sure you want to resolve the issue?")) {
+            e.preventDefault();
+        }
+    });
+
 })();
