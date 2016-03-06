@@ -67,6 +67,7 @@ class LoginHandler(BaseHandler):
             del self.session["logged_in"]
             del self.session["nickname"]
             self.redirect(self.reverse_url("main"))
+            return
         self.render("login.html")
 
     @_inject_sessions
