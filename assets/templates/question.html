@@ -24,8 +24,18 @@
     <div id="info-overlay" class="hidden"></div>
     <div id="info-panel" class="hidden">
         {% if not question.get_is_resolved() %}
-            <p id="resolve-button-wrapper">
-                <a href="#">Resolve</a>
+            <p id="info-button-wrappers">
+                {% if session['nickname'] == question.get_chatroom().get_asker_name() %}
+                    <a href="#" class="resolve">Resolve</a>
+                {% else %}
+                    {% if question.get_qid() in session['watched'] %}
+                        <a href="#" class="unwatch">Unwatch</a>
+                        <a href="#" class="watch hidden">Watch</a>
+                    {% else %}
+                        <a href="#" class="unwatch hidden">Unwatch</a>
+                        <a href="#" class="watch">Watch</a>
+                    {% end %}
+                {% end %}
             </p>
         {% end %}
         <h2>Connected Users</h2>

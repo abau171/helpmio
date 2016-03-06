@@ -128,16 +128,44 @@
         toggleInfoPanel();
     });
 
-    document.querySelector('#resolve-button-wrapper a').addEventListener('click', function (e) {
-        e.preventDefault();
-        if (window.confirm("Are you sure you want to resolve the issue?")) {
+    var resolve = document.querySelector('#info-button-wrappers .resolve');
+    if (resolve) {
+        resolve.addEventListener('click', function (e) {
+            e.preventDefault();
+            if (window.confirm("Are you sure you want to resolve the issue?")) {
+                web_socket.send(JSON.stringify({
+                    'type': 'resolve',
+                    'data': null
+                }));
+                document.getElementById('resolve-button-wrapper').style.display = 'none';
+                alert("The issue has been marked as resolved.");
+            }
+        });
+    }
+
+    var watch = document.querySelector('#info-button-wrappers .watch');
+    var unwatch = document.querySelector('#info-button-wrappers .unwatch');
+
+    if (watch && unwatch) {
+        watch.addEventListener('click', function (e) {
+            e.preventDefault();
             web_socket.send(JSON.stringify({
-                'type': 'resolve',
+                'type': 'watch',
                 'data': null
             }));
-            document.getElementById('resolve-button-wrapper').style.display = 'none';
-            alert("The issue has been marked as resolved.");
-        }
-    });
+            watch.className = 'watch hidden';
+            unwatch.className = 'unwatch';
+        });
+
+        unwatch.addEventListener('click', function (e) {
+            e.preventDefault();
+            web_socket.send(JSON.stringify({
+                'type': 'unwatch',
+                'data': null
+            }));
+            watch.className = 'watch';
+            unwatch.className = 'unwatch hidden';
+        });
+    }
 
 })();
