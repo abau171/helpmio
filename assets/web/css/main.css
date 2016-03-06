@@ -38,6 +38,7 @@ header {
     height: 100px;
     background-color: #333;
     background-image: url("../images/header_texture.jpg");
+    box-shadow: 0px 0px 8px #222222;
     z-index: 100;
 }
 
@@ -120,4 +121,46 @@ header #right_nav {
         width: calc(100% - 20px);
         margin: 0 10px;
     }
+}
+
+/*  =============== 
+    ==== FORMS ====
+    ===============
+*/
+
+form label {
+    font-family: mainFont;
+    display: block;
+    margin-bottom: 10px;
+    font-size: 30px;
+}
+
+form input {
+    font-family: mainFont;
+}
+
+form input[type="text"] {
+    font-size: 20px;
+}
+
+form textarea {
+    font-family: mainFont;
+    font-size: 20px;
+    width: 100%;
+}
+
+form input[type="submit"] {
+    box-shadow: 0px 0px 8px #222222;
+    border: 0;
+    padding: 10px;
+    background-color: #333;
+    font-size: 20px;
+    color: white;
+}
+
+form input[type="submit"]:hover {
+    box-shadow: 0px 0px 8px #d26f2d;
+    cursor: pointer;
+    background-color: #df6c20;
+    transition: background-color 0.3s ease 0s, box-shadow 0.3s ease 0s;
 }
