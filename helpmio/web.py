@@ -99,11 +99,7 @@ class QuestionWebSocketHandler(tornado.websocket.WebSocketHandler):
     
     @_inject_sessions
     def open(self, qid):
-        if "nickname" in self.session:
-            self._nickname = self.session["nickname"]
-        else:
-            self._nickname = None
-        print(self._nickname)
+        self._nickname = self.session["nickname"]
         question = helpmio.question.get_question(qid)
         self._chatroom = question.get_chatroom()
         self._connection_id = self._chatroom.connect(self._nickname)
@@ -139,15 +135,12 @@ class QuestionWebSocketHandler(tornado.websocket.WebSocketHandler):
 
     def connect_recieved(self, connected_id):
         nickname = self._chatroom.get_user(connected_id)
-        if nickname != None:
-            message = {"type": "connect", "data": {"connection_id": connected_id, "nickname": nickname, "is_asker": False}}
-            self.write_message(json.dumps(message))
+        message = {"type": "connect", "data": {"connection_id": connected_id, "nickname": nickname, "is_asker": False}}
+        self.write_message(json.dumps(message))
 
     def disconnect_recieved(self, disconnected_id):
-        nickname = self._chatroom.get_user(disconnected_id)
-        if nickname != None:
-            message = {"type": "disconnect", "data": {"connection_id": disconnected_id}}
-            self.write_message(json.dumps(message))
+        message = {"type": "disconnect", "data": {"connection_id": disconnected_id}}
+        self.write_message(json.dumps(message))
 
     def chat_recieved(self, chat):
         sender_connection_id, text = chat
