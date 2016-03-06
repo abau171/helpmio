@@ -1,3 +1,4 @@
+import helpmio.question
 import helpmio.session
 import os
 import tornado.httpserver
@@ -15,7 +16,7 @@ def init(port):
         tornado.web.url(r"/", MainHandler, name="main"),
         tornado.web.url(r"/questions/new", NewQuestionHandler, name="new_question"),
         tornado.web.url(r"/questions/(\d+)", QuestionHandler, name="question"),
-        tornado.web.url(r"/ws", WebSocketHandler, name="websocket"),
+        tornado.web.url(r"/ws/(.*)", QuestionWebSocketHandler, name="question_websocket"),
         tornado.web.url(r"/assets/(.*)", tornado.web.StaticFileHandler, {"path": static_files_path}, name="static")
     ], template_path=template_path, debug=True)
     server = tornado.httpserver.HTTPServer(app)
@@ -52,8 +53,18 @@ class QuestionHandler(tornado.web.RequestHandler):
 
     @_inject_sessions
     def get(self, qid):
-        self.render("question.html")
+        self.render("question.html", qid=qid)
 
 
-class WebSocketHandler(tornado.websocket.WebSocketHandler):
-    pass
+class QuestionWebSocketHandler(tornado.websocket.WebSocketHandler):
+    
+    @_inject_sessions
+    def open(self, qid):
+        self._chatroom = helpmio.question.get_question(qid).get_chatroom()
+        self._connection_id = chatroom.connect(self)
+        def message_received(message):
+            self.write_message(str(message))
+        self._chatroom.on_chat.subscribe(message_received)
+
+    def on_message(self, message):
+        self._chatroom.add_chat(self._connection_id, message)

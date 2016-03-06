@@ -1,14 +1,14 @@
 import uuid
-import event
+import helpmio.event
 
 class ChatRoom:
 
     def __init__(self):
         self._connected_users = dict()
         self._chat_history = []
-        self.on_connect = event.EventDispatcher()
-        self.on_disconnect = event.EventDispatcher()
-        self.on_chat = event.EventDispatcher()
+        self.on_connect = helpmio.event.EventDispatcher()
+        self.on_disconnect = helpmio.event.EventDispatcher()
+        self.on_chat = helpmio.event.EventDispatcher()
 
     def connect(self, user):
         connection_id = str(uuid.uuid4())

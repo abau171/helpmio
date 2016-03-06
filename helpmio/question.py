@@ -1,6 +1,5 @@
 import uuid
-import enum
-import chat
+import helpmio.chat
 
 
 class Question:
@@ -10,7 +9,7 @@ class Question:
         self._title = title
         self._description = description
         self._is_resolved = False
-        self._chatroom = chat.ChatRoom()
+        self._chatroom = helpmio.chat.ChatRoom()
 
     def get_qid(self):
         return self._qid

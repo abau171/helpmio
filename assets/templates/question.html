@@ -11,3 +11,10 @@
         <input type="button" id="chat-send" value="Send">
     </div>
 {% end %}
+
+{% block end_body %}
+    <script>
+        var socket_url_path = "{{ reverse_url('question_websocket', qid) }}";
+    </script>
+    <script src="{{ reverse_url('static', 'js/question.js') }}"></script>
+{% end %}
