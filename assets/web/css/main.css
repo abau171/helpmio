@@ -14,7 +14,12 @@
     ==============
 */
 
+html {
+    height: 100%;
+}
+
 body {
+    height: calc(100% - 120px);
     background-color: #4d75b3;
     margin: 120px 0 0 0;
     padding: 0;
@@ -36,6 +41,7 @@ header {
 }
 
 .max {
+    height: 100%;
     position: relative;
     margin: 0 auto;
     max-width: 1000px;
@@ -95,6 +101,10 @@ header #right_nav {
     ==== CONTENT ====
     =================
 */
+
+#content {
+    height: 100%;
+}
 
 @media screen and (max-width: 1020px) {
     #content {

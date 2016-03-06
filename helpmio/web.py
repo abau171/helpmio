@@ -51,8 +51,8 @@ class NewQuestionHandler(tornado.web.RequestHandler):
 class QuestionHandler(tornado.web.RequestHandler):
 
     @_inject_sessions
-    def get(self):
-        self.write("Question")
+    def get(self, qid):
+        self.render("question.html")
 
 
 class WebSocketHandler(tornado.websocket.WebSocketHandler):

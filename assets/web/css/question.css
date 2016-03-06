@@ -1,0 +1,33 @@
+#chat-content {
+    height: calc(100% - 50px);
+    background: white;
+    border-bottom: 1px solid black;
+}
+
+#chat-input-wrapper {
+    position: relative;
+    height: 30px;
+}
+
+#chat-input-wrapper #chat-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 28px;
+    width: calc(100% - 70px);
+    line-height: 20px;
+    font-size: 20px;
+    border: 0;
+}
+
+#chat-input-wrapper #chat-send {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: block;
+    margin: 0;
+    height: 30px;
+    width: 70px;
+    border: 0;
+    font-size: 20px;
+}
