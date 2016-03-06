@@ -41,7 +41,7 @@ class MainHandler(tornado.web.RequestHandler):
     @_inject_sessions
     def get(self):
         questions = helpmio.question.get_all_questions()
-        self.render("questions.html", questions=questions)
+        self.render("question_list.html", questions=questions)
 
 
 class NewQuestionHandler(tornado.web.RequestHandler):
