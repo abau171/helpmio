@@ -5,6 +5,7 @@ import tornado.httpserver
 import tornado.web
 import tornado.websocket
 import json
+import re
 
 def init(port):
     template_path = os.path.join(
@@ -53,7 +54,11 @@ class MainHandler(BaseHandler):
 
     @_inject_sessions
     def get(self):
-        questions = helpmio.question.get_all_questions()
+        tag = self.get_argument("tag", default=None)
+        if tag != None:
+            questions = helpmio.question.get_questions_by_tag(tag)
+        else:
+            questions = helpmio.question.get_all_questions()
         self.render("question_list.html", questions=questions)
 
 
@@ -85,7 +90,9 @@ class NewQuestionHandler(BaseHandler):
         self.redirect(self.reverse_url("question",
             helpmio.question.new_question(
                 self.get_body_argument("title"),
-                self.get_body_argument("description")).get_qid()))
+                self.get_body_argument("description"),
+                re.split(r"[, ]+", self.get_body_argument("tags"))
+                ).get_qid()))
 
 
 class QuestionHandler(BaseHandler):
