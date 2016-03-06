@@ -3,6 +3,25 @@
 	font-family: mainFont;
 }
 
+#new_question label {
+	display: block;
+	margin-bottom: 10px;
+	font-size: 30px;
+}
+
+#new_question input {
+	font-family: mainFont;
+}
+
+#new_question input[type="text"] {
+	font-size: 20px;
+}
+
+#new_question textarea {
+	font-size: 20px;
+	width: 100%;
+}
+
 #new_question input[type="submit"] {
 	border: 0;
 	padding: 10px;
