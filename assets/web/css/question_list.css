@@ -3,6 +3,7 @@ h1 {
 	font-family: mainFont;
 	font-size: 40px;
     display: inline-block;
+    margin-bottom: 10px;
 }
 
 #new-question-wrapper {
@@ -52,11 +53,12 @@ h1 {
     padding-top: 20px;
     height: 100px;
     background: #CCC;
+    transition: box-shadow 0.3s ease 0s;
 }
 
 #question-list li:hover {
     box-shadow: 0px 0px 8px #d26f2d;
-    transition: background-color 0.3s ease 0s;
+    transition: box-shadow 0.3s ease 0s;
 }
 
 #question-list li h2 {
