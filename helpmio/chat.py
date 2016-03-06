@@ -13,6 +13,7 @@ class ChatRoom:
 
     def __init__(self):
         self._connected_users = dict()
+        self._all_users = dict()
         self._chat_history = []
         self.on_connect = helpmio.event.EventDispatcher()
         self.on_disconnect = helpmio.event.EventDispatcher()
@@ -21,6 +22,7 @@ class ChatRoom:
     def connect(self, nickname):
         connection_id = str(uuid.uuid4())
         self._connected_users[connection_id] = nickname
+        self._all_users[connection_id] = nickname
         self.on_connect(connection_id)
         return connection_id
 
@@ -34,10 +36,13 @@ class ChatRoom:
         self.on_chat(chat)
 
     def get_user(self, connection_id):
-        return self._connected_users[connection_id]
+        return self._all_users[connection_id]
 
     def get_connected_users(self):
         return dict(self._connected_users)
+
+    def get_all_users(self):
+        return dict(self._all_users)
 
     def get_chat_history(self):
         return self._chat_history[:]
