@@ -46,6 +46,9 @@ class _QuestionManager:
         else:
             return None
 
+    def get_all_questions(self):
+        return list(self._questions.values())
+
 
 _question_manager = _QuestionManager()
 
@@ -56,3 +59,7 @@ def new_question(title, description):
 
 def get_question(qid):
     return _question_manager.get_question(qid)
+
+
+def get_all_questions():
+    return _question_manager.get_all_questions()
