@@ -5,9 +5,11 @@
 {% end %}
 
 {% block content %}
-    <div id="new-question-wrapper">
-        <a href="{{ reverse_url('new_question') }}">New Question</a>
-    </div>
+    {% if session['logged_in'] %}
+        <div id="new-question-wrapper">
+            <a href="{{ reverse_url('new_question') }}">New Question</a>
+        </div>
+    {% end %}
     <h1>Questions</h1>
         {% if questions %}
         <ul id="question-list">
