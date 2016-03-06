@@ -98,13 +98,12 @@ class NewQuestionHandler(BaseHandler):
     def post(self):
         title = self.get_body_argument("title")
         description = self.get_body_argument("description")
-        tags = self.get_body_argument("tags")
-        if title == "" or description == "" or tags == "":
+        if title == "" or description == "":
             self.redirect(self.reverse_url("new_question") + "?error=1")
             return
         self.redirect(self.reverse_url("question",
             helpmio.question.new_question(
-                title, description, re.split(r"[, ]+", tags)).get_qid()))
+                title, description, re.split(r"[, ]+", self.get_body_argument("tags"))).get_qid()))
 
 
 class QuestionHandler(BaseHandler):
