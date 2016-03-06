@@ -105,6 +105,11 @@ header #left_nav {
 
 header #right_nav {
     right: 0;
+    text-align: right;
+}
+
+#logged_in_info {
+    font-size: 18px;
 }
 
 /*  ================= 
