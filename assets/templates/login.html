@@ -4,7 +4,7 @@
     <form action="" method="post">
         <p>
             <label for="username">Username:</label>
-            <input type="text" id="username" name="username" {% if error %}class="error"{% end %}>
+            <input type="text" id="username" name="username" autocomplete="off" {% if error %}class="error"{% end %}>
             {% if error %}<p class="error">{{ error }}</p>{% end %}
         </p>
         <p>

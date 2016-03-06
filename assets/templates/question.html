@@ -11,7 +11,7 @@
     </div>
     <form id="chat-input-form">
         {% if not question.get_is_resolved() %}
-            <input type="text" id="chat-input" {% if not session['logged_in'] %}disabled{% end %}>
+            <input type="text" id="chat-input" autocomplete="off" {% if not session['logged_in'] %}disabled{% end %}>
             <input type="submit" value="&#X27A4;" {% if not session['logged_in'] %}disabled{% end %}>
         {% else %}
             This issue has been resolved.
