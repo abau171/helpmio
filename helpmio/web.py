@@ -72,7 +72,10 @@ class QuestionWebSocketHandler(tornado.websocket.WebSocketHandler):
         def message_received(message):
             print(message)
             self.write_message(str(message))
-        self._chatroom.on_chat.subscribe(message_received)
+        self._chat_cid = self._chatroom.on_chat.subscribe(message_received)
 
     def on_message(self, message):
         self._chatroom.add_chat(self._connection_id, message)
+
+    def on_close(self):
+        self._chatroom.on_chat.unsubscribe(self._chat_cid)
