@@ -133,7 +133,7 @@ class QuestionWebSocketHandler(tornado.websocket.WebSocketHandler):
                      "nickname": nickname,
                      "is_asker": self._chatroom.get_asker_name() == nickname}
                      for connection_id, nickname in self._chatroom.get_all_users().items()]
-        onlinelist = [connection_id for connection_id in self._chatroom.get_connected_users().values()]
+        onlinelist = [connection_id for connection_id in self._chatroom.get_connected_users()]
         chat_history = self._chatroom.get_chat_history()
         message = {"type": "curstate", "data": {"userlist": userlist, "onlinelist": onlinelist, "history": chat_history}}
         self.write_message(json.dumps(message))
