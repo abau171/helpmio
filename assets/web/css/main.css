@@ -96,20 +96,11 @@ header #right_nav {
     =================
 */
 
-@media screen and (max-width: 1150px) {
+@media screen and (max-width: 1020px) {
     #content {
-        width: calc(100% - 60px);
-        margin-left: 50px;
+        width: calc(100% - 20px);
+        margin: 0 10px;
     }
-}
-
-#sidebar {
-    position: fixed;
-    left: 0;
-    top: 100px;
-    width: 40px;
-    height: calc(100% - 100px);
-    background-color: #444444;
 }
 
 .question {
