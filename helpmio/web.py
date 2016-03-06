@@ -18,6 +18,7 @@ def init(port):
         "..", "assets")
     app = tornado.web.Application([
         tornado.web.url(r"/", MainHandler, name="main"),
+        tornado.web.url(r"/login", LoginHandler, name="login"),
         tornado.web.url(r"/questions/new", NewQuestionHandler, name="new_question"),
         tornado.web.url(r"/questions/(.*)", QuestionHandler, name="question"),
         tornado.web.url(r"/ws/(.*)", QuestionWebSocketHandler, name="question_websocket"),
@@ -40,7 +41,15 @@ def _inject_sessions(func):
     return inner
 
 
-class MainHandler(tornado.web.RequestHandler):
+class BaseHandler(tornado.web.RequestHandler):
+
+    def get_template_namespace(self):
+        namespace = super(BaseHandler, self).get_template_namespace()
+        namespace["session"] = self.session
+        return namespace
+
+
+class MainHandler(BaseHandler):
 
     @_inject_sessions
     def get(self):
@@ -48,7 +57,20 @@ class MainHandler(tornado.web.RequestHandler):
         self.render("question_list.html", questions=questions)
 
 
-class NewQuestionHandler(tornado.web.RequestHandler):
+class LoginHandler(BaseHandler):
+
+    @_inject_sessions
+    def get(self):
+        self.render("login.html")
+
+    @_inject_sessions
+    def post(self):
+        self.session["logged_in"] = True
+        self.session["nickname"] = self.get_body_argument("username")
+        self.redirect(self.reverse_url("main"))
+
+
+class NewQuestionHandler(BaseHandler):
 
     @_inject_sessions
     def get(self):
@@ -62,7 +84,7 @@ class NewQuestionHandler(tornado.web.RequestHandler):
                 self.get_body_argument("description")).get_qid()))
 
 
-class QuestionHandler(tornado.web.RequestHandler):
+class QuestionHandler(BaseHandler):
 
     @_inject_sessions
     def get(self, qid):

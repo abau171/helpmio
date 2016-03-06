@@ -28,7 +28,11 @@
 
                 <!-- Right alligned -->
                 <nav class="nav" id="right_nav">
-                    <a href="#login">Login</a>
+                    {% if session['logged_in'] %}
+                        Welcome, {{ session['nickname'] }}!
+                    {% else %}
+                        <a href="{{ reverse_url('login') }}">Login</a>
+                    {% end %}
                 </nav>
 
             </div>
