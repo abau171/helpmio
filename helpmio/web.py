@@ -68,12 +68,19 @@ class LoginHandler(BaseHandler):
             del self.session["nickname"]
             self.redirect(self.reverse_url("main"))
             return
-        self.render("login.html")
+        error = None
+        if self.get_query_argument("error", "") == "1":
+            error = "Username cannot be empty."
+        self.render("login.html", error=error)
 
     @_inject_sessions
     def post(self):
+        username = self.get_body_argument("username")
+        if username == "":
+            self.redirect(self.reverse_url("login") + "?error=1")
+            return
         self.session["logged_in"] = True
-        self.session["nickname"] = self.get_body_argument("username")
+        self.session["nickname"] = username
         self.redirect(self.reverse_url("main"))
 
 
@@ -81,16 +88,23 @@ class NewQuestionHandler(BaseHandler):
 
     @_inject_sessions
     def get(self):
-        self.render("new_question.html")
+        error = None
+        error_arg = self.get_query_argument("error", "")
+        if error_arg == "1":
+            error = "Fields cannot be empty."
+        self.render("new_question.html", error=error)
 
     @_inject_sessions
     def post(self):
+        title = self.get_body_argument("title")
+        description = self.get_body_argument("description")
+        tags = self.get_body_argument("tags")
+        if title == "" or description == "" or tags == "":
+            self.redirect(self.reverse_url("new_question") + "?error=1")
+            return
         self.redirect(self.reverse_url("question",
             helpmio.question.new_question(
-                self.get_body_argument("title"),
-                self.get_body_argument("description"),
-                re.split(r"[, ]+", self.get_body_argument("tags"))
-                ).get_qid()))
+                title, description, re.split(r"[, ]+", tags)).get_qid()))
 
 
 class QuestionHandler(BaseHandler):
