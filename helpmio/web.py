@@ -115,7 +115,7 @@ class QuestionHandler(BaseHandler):
 
     @_inject_sessions
     def get(self, qid):
-        self.render("question.html", qid=qid)
+        self.render("question.html", question=helpmio.question.get_question(qid))
 
 
 class QuestionWebSocketHandler(tornado.websocket.WebSocketHandler):
