@@ -5,6 +5,9 @@
 {% end %}
 
 {% block content %}
+    <form action="" method="get">
+        <input type="search" name="tag" placeholder="Search Tag" {% if tag %}value="{{ tag }}"{% end %}>
+    </form>
     {% if session['logged_in'] %}
         <div id="new-question-wrapper">
             <a href="{{ reverse_url('new_question') }}">New Question</a>

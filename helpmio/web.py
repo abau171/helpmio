@@ -56,7 +56,7 @@ class MainHandler(BaseHandler):
     def get(self):
         tag = self.get_argument("tag", default=None)
         questions = helpmio.question.filter_questions(is_resolved=False, tag=tag)
-        self.render("question_list.html", questions=questions)
+        self.render("question_list.html", tag=tag, questions=questions)
 
 
 class LoginHandler(BaseHandler):
