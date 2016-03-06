@@ -4,7 +4,12 @@
     var socket_url,
         web_socket,
         chat_div = document.getElementById('chat-content'),
-        chat_input = document.getElementById('chat-input');
+        chat_input = document.getElementById('chat-input'),
+        connected_users = {};
+
+    function addMessage(message) {
+        chat_div.textContent += message + '\n';
+    }
 
     if (window.location.protocol === 'https:') {
         socket_url = 'wss:';
@@ -16,7 +21,37 @@
 
     web_socket = new WebSocket(socket_url);
     web_socket.onmessage = function (msg) {
-        chat_div.textContent += msg.data + "\n";
+        var obj = JSON.parse(msg.data),
+            data = obj['data'];
+        if (obj['type'] === 'curstate') {
+            var userlist = data['userlist'],
+                history = data['history'];
+            for (var i in userlist) {
+                var user = userlist[i];
+                connected_users[user['connection_id']] = {
+                    'nickname': user['nickname'],
+                    'is_asker': user['is_asker']
+                };
+            }
+            for (var i in history) {
+                var userName = connected_users[history[i][0]]['nickname'],
+                    message = history[i][1];
+                addMessage(userName + ': ' + message);
+            }
+        } else if (obj['type'] === 'message') {
+            var userName = connected_users[data['connection_id']]['nickname'],
+                message = data['message'];
+            addMessage(userName + ': ' + message);
+        } else if (obj['type'] === 'connect') {
+            connected_users[data['connection_id']] = {
+                'nickname': data['nickname'],
+                'is_asker': data['is_asker']
+            };
+            addMessage(data['nickname'] + ' connected.');   
+        } else if (obj['type'] === 'disconnect') {
+            addMessage(connected_users[data['connection_id']]['nickname'] + ' disconnected.');
+            delete connected_users[data['connection_id']];
+        }
     };
 
     document.getElementById('chat-input-form').addEventListener('submit', function(e) {
