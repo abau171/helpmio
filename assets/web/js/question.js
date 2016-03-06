@@ -11,6 +11,10 @@
         users = {},
         active_users = [];
 
+    window.onbeforeunload = function (e) {
+        return "A chat is currently open.\nIf you leave this page you will no longer receive messages from this chat.";
+    };
+
     function addMessage(type, username, message) {
         var p = document.createElement("p");
         p.className = type;
@@ -23,6 +27,7 @@
         p.appendChild(span);
         p.appendChild(document.createTextNode(' ' + message));
         chat_div.appendChild(p);
+        p.scrollIntoView();
     }
 
     function addUser(connection_id, username) {
