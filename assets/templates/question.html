@@ -25,7 +25,7 @@
     <div id="info-panel" class="hidden">
         {% if not question.get_is_resolved() %}
             <p id="resolve-button-wrapper">
-                <a href="{{ reverse_url('resolve_question', question.get_qid()) }}">Resolve</a>
+                <a href="#">Resolve</a>
             </p>
         {% end %}
         <h2>Connected Users</h2>

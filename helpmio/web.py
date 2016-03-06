@@ -22,7 +22,6 @@ def init(port):
         tornado.web.url(r"/login", LoginHandler, name="login"),
         tornado.web.url(r"/questions/new", NewQuestionHandler, name="new_question"),
         tornado.web.url(r"/questions/([^/]+)", QuestionHandler, name="question"),
-        tornado.web.url(r"/questions/([^/]+)/resolve", QuestionResolveHandler, name="resolve_question"),
         tornado.web.url(r"/ws/(.*)", QuestionWebSocketHandler, name="question_websocket"),
         tornado.web.url(r"/assets/(.*)", tornado.web.StaticFileHandler, {"path": static_files_path}, name="static"),
         tornado.web.url(r"/(favicon\.ico)", tornado.web.StaticFileHandler, {"path": favicon_path}, name="favicon")
@@ -117,14 +116,6 @@ class QuestionHandler(BaseHandler):
     @_inject_sessions
     def get(self, qid):
         self.render("question.html", question=helpmio.question.get_question(qid))
-
-
-class QuestionResolveHandler(BaseHandler):
-
-    @_inject_sessions
-    def get(self, qid):
-        helpmio.question.get_question(qid).set_resolved()
-        self.redirect(self.reverse_url("question", qid))
 
 
 class QuestionWebSocketHandler(tornado.websocket.WebSocketHandler):

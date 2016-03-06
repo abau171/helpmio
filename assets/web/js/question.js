@@ -124,8 +124,14 @@
     });
 
     document.querySelector('#resolve-button-wrapper a').addEventListener('click', function (e) {
-        if (!window.confirm("Are you sure you want to resolve the issue?")) {
-            e.preventDefault();
+        e.preventDefault();
+        if (window.confirm("Are you sure you want to resolve the issue?")) {
+            web_socket.send(JSON.stringify({
+                'type': 'resolve',
+                'data': null
+            }));
+            document.getElementById('resolve-button-wrapper').style.display = 'none';
+            alert("The issue has been marked as resolved.");
         }
     });
 
