@@ -6,8 +6,8 @@
 
 {% block content %}
     <div id="chat-content">
-        <p class="asker">{{ question.get_title() }}</p>
-        <p class="asker">{{ question.get_description() }}</p>
+        <p class="asker"><span>Title: </span>{{ question.get_title() }}</p>
+        <p class="asker"><span>Description: </span>{{ question.get_description() }}</p>
     </div>
     <form id="chat-input-form">
         <input type="text" id="chat-input" {% if not session['logged_in'] %}disabled{% end %}>
