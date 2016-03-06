@@ -30,7 +30,10 @@ class ChatRoom:
         self.on_chat(chat)
 
     def get_user(self, connection_id):
-        return self._all_users[connection_id]
+        if connection_id in self._all_users:
+            return self._all_users[connection_id]
+        else:
+            return None
 
     def get_connected_users(self):
         return dict(self._connected_users)
