@@ -144,7 +144,7 @@ class QuestionWebSocketHandler(tornado.websocket.WebSocketHandler):
             self.write_message(json.dumps(message))
 
     def disconnect_recieved(self, disconnected_id):
-        nickname = self._chatroom.get_user(connection_id)
+        nickname = self._chatroom.get_user(disconnected_id)
         if nickname != None:
             message = {"type": "disconnect", "data": {"connection_id": disconnected_id}}
             self.write_message(json.dumps(message))
