@@ -1,9 +1,11 @@
 #chat-content {
+    overflow: auto;
     padding: 10px;
     height: calc(100% - 100px);
     background: #CCC;
     border-bottom: 1px solid black;
     color: #222;
+    font-size: 20px;
 }
 
 #chat-input-form {
@@ -17,11 +19,12 @@
     top: 0;
     left: 0;
     height: 40px;
-    width: 100%;
+    width: calc(100% - 60px);
     line-height: 20px;
     font-size: 20px;
     border: 0;
     background: #CCC;
+    padding-right: 60px;
 }
 
 #chat-input-form input[type="submit"] {
@@ -31,12 +34,12 @@
     display: block;
     height: 70px;
     border: 0;
-    font-size: 50px;
+    font-size: 40px;
     color: #222;
 
     box-shadow: none;
     background-color: transparent;
     line-height: 30px;
-    margin-top: -13px;
+    margin-top: -14px;
     width: 60px;
 }
