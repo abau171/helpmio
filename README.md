@@ -13,4 +13,4 @@ pip3 install tornado
 ```
 python3 main.py
 ```
-4. On the local machine, go to a browser and enter http://localhost:9009/ in the address bar to access the application. If other computers are on the same network, you can enter the IP address of the machine running main.py to access the application as well.
+4. On the local machine, go to a browser and enter http://localhost:9009/ in the address bar to access the application. If other computers are on the same network, you can enter the IP address (with port 9009 at the end) of the machine running main.py to access the application as well.
