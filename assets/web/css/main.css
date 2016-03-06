@@ -20,7 +20,7 @@ html {
 
 body {
     height: calc(100% - 120px);
-    background-color: #4d75b3;
+    background-color: #6878A9;
     margin: 120px 0 0 0;
     padding: 0;
 }
@@ -37,6 +37,7 @@ header {
     right: 0;
     height: 100px;
     background-color: #333;
+    background-image: url("../images/header_texture.jpg");
     z-index: 100;
 }
 

@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block head %}
+    <link rel="stylesheet" href="{{ reverse_url('static', 'css/new_question.css') }}">
+{% end %}
+
 {% block content %}
     <form action="" method="post">
         <p>

@@ -1,13 +1,42 @@
+
+@font-face {
+    font-family: mainFont;
+    src: url("../fonts/SourceCodePro-Regular.otf");
+}
+
+h1 {
+	font-family: mainFont;
+	font-size: 30px;
+}
+
 #new-question-wrapper {
+	padding-top: 10px;
     text-align: right;
 }
 
 #new-question-wrapper a {
+	padding: 10px;
+	background-color: #333;
+	font-family: mainFont;
     font-size: 20px;
     color: white;
+    transition: all 0.3s ease 0s;
+}
+
+#new-question-wrapper a:link {
+    text-decoration: none;
 }
 
 #new-question-wrapper a:hover {
+	background-color: #df6c20;
+    text-decoration: none;
+}
+
+#new-question-wrapper a:visited {
+    text-decoration: none;
+}
+
+#new-question-wrapper a:active {
     text-decoration: none;
 }
 
@@ -15,16 +44,25 @@
     margin: 0;
     padding: 0;
     list-style: none;
+    font-family: mainFont;
 }
 
 #question-list li {
+	border-style: groove;
+	border-width: 3px;
+	border-color: #476085;
+
     margin-top: 10px;
     padding-left: 20px;
     padding-top: 20px;
     height: 100px;
-    background: #809fff;
+    background: #9DA6BF;
 }
 
 #question-list li h2 {
     margin-top: 0;
+}
+
+.question a {
+	color: black;
 }
