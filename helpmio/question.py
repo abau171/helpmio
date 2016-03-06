@@ -8,7 +8,7 @@ class Question:
         self._qid = str(uuid.uuid4())
         self._title = title
         self._description = description
-        self._tags = tags
+        self._tags = [tag.lower() for tag in tags]
         self._is_resolved = False
         self._chatroom = helpmio.chat.ChatRoom()
 
@@ -22,7 +22,7 @@ class Question:
         return self._description
 
     def get_is_resolved(self):
-        return self._chatroom
+        return self._is_resolved
 
     def get_chatroom(self):
         return self._chatroom
@@ -31,7 +31,7 @@ class Question:
         return self._tags[:]
 
     def has_tag(self, tag):
-        return tag in self._tags
+        return tag.lower() in self._tags
 
     def set_resolved(self):
         self._is_resolved = True
@@ -56,8 +56,11 @@ class _QuestionManager:
     def get_all_questions(self):
         return list(self._questions.values())
 
-    def get_questions_by_tag(self, tag):
-        return [question for question in self._questions.values() if question.has_tag(tag)]
+    def filter_questions(self, is_resolved, tag):
+        return [question for question in self._questions.values()
+                if (is_resolved == None or question.get_is_resolved() == is_resolved)
+                and (tag == None or question.has_tag(tag))
+                ]
 
 
 _question_manager = _QuestionManager()
@@ -75,5 +78,5 @@ def get_all_questions():
     return _question_manager.get_all_questions()
 
 
-def get_questions_by_tag(tag):
-    return _question_manager.get_questions_by_tag(tag)
+def filter_questions(is_resolved=None, tag=None):
+    return _question_manager.filter_questions(is_resolved, tag)

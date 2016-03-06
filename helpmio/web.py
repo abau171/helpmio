@@ -55,10 +55,7 @@ class MainHandler(BaseHandler):
     @_inject_sessions
     def get(self):
         tag = self.get_argument("tag", default=None)
-        if tag != None:
-            questions = helpmio.question.get_questions_by_tag(tag)
-        else:
-            questions = helpmio.question.get_all_questions()
+        questions = helpmio.question.filter_questions(is_resolved=False, tag=tag)
         self.render("question_list.html", questions=questions)
 
 
