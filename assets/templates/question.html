@@ -6,8 +6,8 @@
 
 {% block content %}
     <div id="chat-content">
-        <p class="asker"><span>Title: </span>{{ question.get_title() }}</p>
-        <p class="asker"><span>Description: </span>{{ question.get_description() }}</p>
+        <p class="meta"><span>Title: </span>{{ question.get_title() }}</p>
+        <p class="meta"><span>Description: </span>{{ question.get_description() }}</p>
     </div>
     <form id="chat-input-form">
         {% if not question.get_is_resolved() %}

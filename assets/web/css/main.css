@@ -20,7 +20,8 @@ html {
 
 body {
     height: calc(100% - 120px);
-    background-color: #51575C;
+    /*background-color: #51575C;*/
+    background-color: #f0f0f0;
     margin: 120px 0 0 0;
     padding: 0;
 }
