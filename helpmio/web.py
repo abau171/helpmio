@@ -13,12 +13,16 @@ def init(port):
     static_files_path = os.path.join(
         os.path.dirname(os.path.realpath(__file__)),
         "..", "assets", "web")
+    favicon_path = os.path.join(
+        os.path.dirname(os.path.realpath(__file__)),
+        "..", "assets")
     app = tornado.web.Application([
         tornado.web.url(r"/", MainHandler, name="main"),
         tornado.web.url(r"/questions/new", NewQuestionHandler, name="new_question"),
         tornado.web.url(r"/questions/(.*)", QuestionHandler, name="question"),
         tornado.web.url(r"/ws/(.*)", QuestionWebSocketHandler, name="question_websocket"),
-        tornado.web.url(r"/assets/(.*)", tornado.web.StaticFileHandler, {"path": static_files_path}, name="static")
+        tornado.web.url(r"/assets/(.*)", tornado.web.StaticFileHandler, {"path": static_files_path}, name="static"),
+        tornado.web.url(r"/(favicon\.ico)", tornado.web.StaticFileHandler, {"path": favicon_path}, name="favicon")
     ], template_path=template_path, debug=True)
     server = tornado.httpserver.HTTPServer(app)
     server.listen(port)
