@@ -1,0 +1,18 @@
+
+#new_question {
+	font-family: mainFont;
+}
+
+#new_question input[type="submit"] {
+	border: 0;
+	padding: 10px;
+	background-color: #333;
+    font-size: 20px;
+    color: white;
+}
+
+#new_question input[type="submit"]:hover {
+	cursor: pointer;
+	background-color: #df6c20;
+    transition: background-color 0.3s ease 0s;
+}

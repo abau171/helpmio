@@ -9,12 +9,16 @@
         <a href="{{ reverse_url('new_question') }}">New Question</a>
     </div>
     <h1>Questions</h1>
-    <ul id="question-list">
-        {% for question in questions %}
-            <li class="question">
-                <h2><a href="{{ reverse_url('question', question.get_qid()) }}">{{ question.get_title() }}</a></h2>
-                <p>{{ question.get_description() }}</p>
-            </li>
+        {% if questions %}
+        <ul id="question-list">
+            {% for question in questions %}
+                <li class="question">
+                    <h2><a href="{{ reverse_url('question', question.get_qid()) }}">{{ question.get_title() }}</a></h2>
+                    <p>{{ question.get_description() }}</p>
+                </li>
+            {% end %}
+        </ul>
+        {% else %}
+            <p>No questions (sad face)</p>
         {% end %}
-    </ul>
 {% end %}

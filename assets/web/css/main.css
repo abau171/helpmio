@@ -5,7 +5,7 @@
 */
 
 @font-face {
-    font-family: navFont;
+    font-family: mainFont;
     src: url("../fonts/SourceCodePro-Regular.otf");
 }
 
@@ -65,7 +65,7 @@ header .nav {
     height: 50px;
     margin-top: 25px;
 
-    font-family: navFont;
+    font-family: mainFont;
     font-size: 30px;
     color: white;
 }

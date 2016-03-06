@@ -1,9 +1,4 @@
 
-@font-face {
-    font-family: mainFont;
-    src: url("../fonts/SourceCodePro-Regular.otf");
-}
-
 h1 {
 	font-family: mainFont;
 	font-size: 30px;
