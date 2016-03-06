@@ -16,7 +16,7 @@
             {% for question in questions %}
                 <li class="question">
                     <h2><a href="{{ reverse_url('question', question.get_qid()) }}">{{ question.get_title() }}</a></h2>
-                    <p>{{ question.get_description() }}</p>
+                    <p>{{ question.get_truncated_description() }}</p>
                 </li>
             {% end %}
         </ul>

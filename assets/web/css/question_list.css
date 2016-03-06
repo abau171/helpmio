@@ -6,6 +6,15 @@ h1 {
     margin-bottom: 10px;
 }
 
+.question h2 {
+    margin-bottom: 0;
+}
+
+.question p {
+    margin-top: 0;
+}
+
+
 #new-question-wrapper {
 	padding-top: 10px;
     text-align: right;
@@ -50,7 +59,7 @@ h1 {
     box-shadow: 0px 0px 8px #222222;
     margin-top: 10px;
     padding-left: 20px;
-    padding-top: 20px;
+    padding-top: 8px;
     height: 100px;
     background: #CCC;
     transition: box-shadow 0.3s ease 0s;

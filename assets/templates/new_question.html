@@ -13,9 +13,7 @@
         </p>
         <p>
             <label for="description">Description:</label>
-            <textarea rows="8" cols="50" id="description" name="description" {% if description_error %}class="error"{% end %}>
-                {{ description }}
-            </textarea>
+            <textarea rows="8" cols="50" id="description" name="description" {% if description_error %}class="error"{% end %}>{{ description }}</textarea>
             {% if description_error %}<p class="error">{{ description_error }}</p>{% end %}
         </p>
         <p>

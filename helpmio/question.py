@@ -21,6 +21,13 @@ class Question:
     def get_description(self):
         return self._description
 
+    def get_truncated_description(self):
+        max_chars = 250
+        if len(self._description) > max_chars:
+            return (self._description[:max_chars] + '...')
+        else:
+            return self._description
+
     def get_is_resolved(self):
         return self._is_resolved
 
