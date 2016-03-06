@@ -23,7 +23,10 @@
         e.preventDefault();
         var message = chat_input.value;
         chat_input.value = '';
-        web_socket.send(message);
+        web_socket.send(JSON.encode({
+            'type': 'message',
+            'data': message
+        });
         chat_input.focus();
     });
 
