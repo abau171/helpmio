@@ -23,14 +23,14 @@ def init(port):
 
 
 def _inject_sessions(func):
-    def inner(self):
+    def inner(self, *args, **kwargs):
         sid = self.get_cookie("sid", None)
         session = helpmio.session.get_session(sid)
         if session is None:
             session = helpmio.session.new_session()
             self.set_cookie("sid", session.get_sid())
         self.session = session
-        func(self)
+        func(self, *args, **kwargs)
     return inner
 
 
