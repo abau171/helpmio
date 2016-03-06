@@ -96,14 +96,15 @@ class NewQuestionHandler(BaseHandler):
 
     @_inject_sessions
     def post(self):
+        nickname = self.session["nickname"]
         title = self.get_body_argument("title")
         description = self.get_body_argument("description")
         if title == "" or description == "":
             self.redirect(self.reverse_url("new_question") + "?error=1")
             return
+        tags = re.split(r"[, ]+", self.get_body_argument("tags"))
         self.redirect(self.reverse_url("question",
-            helpmio.question.new_question(
-                title, description, re.split(r"[, ]+", self.get_body_argument("tags"))).get_qid()))
+            helpmio.question.new_question(nickname, title, description, tags).get_qid()))
 
 
 class QuestionHandler(BaseHandler):
@@ -126,7 +127,7 @@ class QuestionWebSocketHandler(tornado.websocket.WebSocketHandler):
         self._chat_cid = self._chatroom.on_chat.subscribe(self.chat_recieved)
         userlist = [{"connection_id": connection_id,
                      "nickname": nickname,
-                     "is_asker": False}
+                     "is_asker": self._chatroom.get_asker_name() == nickname}
                      for connection_id, nickname in self._chatroom.get_all_users().items()]
         onlinelist = [connection_id for connection_id in self._chatroom.get_connected_users().values()]
         chat_history = self._chatroom.get_chat_history()
@@ -153,7 +154,7 @@ class QuestionWebSocketHandler(tornado.websocket.WebSocketHandler):
 
     def connect_recieved(self, connected_id):
         nickname = self._chatroom.get_user(connected_id)
-        message = {"type": "connect", "data": {"connection_id": connected_id, "nickname": nickname, "is_asker": False}}
+        message = {"type": "connect", "data": {"connection_id": connected_id, "nickname": nickname, "is_asker": self._chatroom.get_asker_name() == nickname}}
         self.write_message(json.dumps(message))
 
     def disconnect_recieved(self, disconnected_id):

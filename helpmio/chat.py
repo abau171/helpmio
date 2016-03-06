@@ -2,22 +2,16 @@ import uuid
 import helpmio.event
 
 
-class ChatConnection:
-
-    def __init__(self, connection_id, nickname):
-        self.connection_id = connection_id
-        self.nickname = nickname
-
-
 class ChatRoom:
 
-    def __init__(self):
+    def __init__(self, asker_name):
         self._connected_users = dict()
         self._all_users = dict()
         self._chat_history = []
         self.on_connect = helpmio.event.EventDispatcher()
         self.on_disconnect = helpmio.event.EventDispatcher()
         self.on_chat = helpmio.event.EventDispatcher()
+        self._asker_name = asker_name
 
     def connect(self, nickname):
         connection_id = str(uuid.uuid4())
@@ -41,8 +35,26 @@ class ChatRoom:
     def get_connected_users(self):
         return dict(self._connected_users)
 
+    def get_num_connected_users(self):
+        return len(self._connected_users)
+
     def get_all_users(self):
         return dict(self._all_users)
 
     def get_chat_history(self):
         return self._chat_history[:]
+
+    def get_asker_name(self):
+        return self._asker_name
+
+    def asker_is_connected(self):
+        for nickname in self._connected_users.values():
+            if nickname == self._asker_name:
+                return True
+        return False
+
+    def non_asker_is_connected(self):
+        for nickname in self._connected_users.values():
+            if nickname != self._asker_name:
+                return True
+        return False
