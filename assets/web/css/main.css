@@ -89,11 +89,13 @@ header .nav a:visited {
 }
 
 header .nav a:hover {
-    text-decoration: underline;
+    color: #df6c20;
+    text-decoration: none;
+    transition: color 0.3s ease 0s;
 }
 
 header .nav a:active {
-    text-decoration: underline;
+    text-decoration: none;
 }
 
 header #left_nav {
