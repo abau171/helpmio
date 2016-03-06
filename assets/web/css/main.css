@@ -112,11 +112,3 @@ header #right_nav {
         margin: 0 10px;
     }
 }
-
-.question {
-    margin-top: 10px;
-    padding-left: 20px;
-    padding-top: 20px;
-    height: 100px;
-    background: #809fff;
-}

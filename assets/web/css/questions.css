@@ -10,3 +10,21 @@
 #new-question-wrapper a:hover {
     text-decoration: none;
 }
+
+#question-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#question-list li {
+    margin-top: 10px;
+    padding-left: 20px;
+    padding-top: 20px;
+    height: 100px;
+    background: #809fff;
+}
+
+#question-list li h2 {
+    margin-top: 0;
+}
