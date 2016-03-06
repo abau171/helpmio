@@ -8,19 +8,22 @@
     <form id="new_question" action="" method="post">
         <p>
             <label for="title">Title:</label>
-            <input type="text" id="title" name="title">
+            <input type="text" id="title" name="title" value="{{ title }}" {% if title_error %}class="error"{% end %}>
+            {% if title_error %}<p class="error">{{ title_error }}</p>{% end %}
         </p>
         <p>
             <label for="description">Description:</label>
-            <textarea rows="8" cols="50" id="description" name="description"></textarea>
+            <textarea rows="8" cols="50" id="description" name="description" {% if description_error %}class="error"{% end %}>
+                {{ description }}
+            </textarea>
+            {% if description_error %}<p class="error">{{ description_error }}</p>{% end %}
         </p>
         <p>
             <label for="tags">Tags:</label>
-            <input type="text" id="tags" name="tags">
+            <input type="text" id="tags" name="tags" value="{{ tags }}">
         </p>
         <p>
             <input type="submit" value="Ask Question">
         </p>
-        {% if error %}<p>{{ error }}</p>{% end %}
     </form>
 {% end %}

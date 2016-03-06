@@ -68,16 +68,13 @@ class LoginHandler(BaseHandler):
             del self.session["nickname"]
             self.redirect(self.reverse_url("main"))
             return
-        error = None
-        if self.get_query_argument("error", "") == "1":
-            error = "Username cannot be empty."
-        self.render("login.html", error=error)
+        self.render("login.html", error=None)
 
     @_inject_sessions
     def post(self):
         username = self.get_body_argument("username")
         if username == "":
-            self.redirect(self.reverse_url("login") + "?error=1")
+            self.render("login.html", error="This field cannot be empty.")
             return
         self.session["logged_in"] = True
         self.session["nickname"] = username
@@ -88,23 +85,30 @@ class NewQuestionHandler(BaseHandler):
 
     @_inject_sessions
     def get(self):
-        error = None
-        error_arg = self.get_query_argument("error", "")
-        if error_arg == "1":
-            error = "Fields cannot be empty."
-        self.render("new_question.html", error=error)
+        self.render("new_question.html",
+            title_error=None, description_error=None,
+            title="", description="", tags="")
 
     @_inject_sessions
     def post(self):
         nickname = self.session["nickname"]
         title = self.get_body_argument("title")
         description = self.get_body_argument("description")
-        if title == "" or description == "":
-            self.redirect(self.reverse_url("new_question") + "?error=1")
+        tags = self.get_body_argument("tags")
+        title_error = None
+        description_error = None
+        if title == "":
+            title_error = "This field cannot be empty."
+        if description == "":
+            description_error = "This field cannot be empty."
+        if title_error or description_error:
+            self.render("new_question.html",
+                title_error=title_error, description_error=description_error,
+                title=title, description=description, tags=tags)
             return
-        tags = re.split(r"[, ]+", self.get_body_argument("tags"))
         self.redirect(self.reverse_url("question",
-            helpmio.question.new_question(nickname, title, description, tags).get_qid()))
+            helpmio.question.new_question(
+                nickname, title, description, re.split(r"[, ]+", tags)).get_qid()))
 
 
 class QuestionHandler(BaseHandler):

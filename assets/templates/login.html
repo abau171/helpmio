@@ -2,10 +2,10 @@
 
 {% block content %}
     <form action="" method="post">
-        {% if error %}<p>{{ error }}</p>{% end %}
         <p>
             <label for="username">Username:</label>
-            <input type="text" id="username" name="username">
+            <input type="text" id="username" name="username" {% if error %}class="error"{% end %}>
+            {% if error %}<p class="error">{{ error }}</p>{% end %}
         </p>
         <p>
             <input type="submit" value="Login">
