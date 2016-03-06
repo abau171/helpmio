@@ -19,12 +19,12 @@
         chat_div.textContent += msg.data + "\n";
     };
 
-    function sendChat() {
+    document.getElementById('chat-input-form').addEventListener('submit', function(e) {
+        e.preventDefault();
         var message = chat_input.value;
         chat_input.value = '';
         web_socket.send(message);
-    }
-
-    document.getElementById('chat-send').addEventListener('click', sendChat);
+        chat_input.focus();
+    });
 
 })();

@@ -4,12 +4,13 @@
     border-bottom: 1px solid black;
 }
 
-#chat-input-wrapper {
+#chat-input-form {
+    display: block;
     position: relative;
     height: 30px;
 }
 
-#chat-input-wrapper #chat-input {
+#chat-input-form #chat-input {
     position: absolute;
     top: 0;
     left: 0;
@@ -20,7 +21,7 @@
     border: 0;
 }
 
-#chat-input-wrapper #chat-send {
+#chat-input-form input[type="submit"] {
     position: absolute;
     top: 0;
     right: 0;
