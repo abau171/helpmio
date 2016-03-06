@@ -1,7 +1,9 @@
 
 h1 {
 	font-family: mainFont;
-	font-size: 30px;
+	font-size: 40px;
+    text-decoration: overline;
+    display: inline-block;
 }
 
 #new-question-wrapper {
@@ -50,7 +52,7 @@ h1 {
     padding-left: 20px;
     padding-top: 20px;
     height: 100px;
-    background: #AFA5A0;
+    background: #CCC;
 }
 
 #question-list li:hover {
