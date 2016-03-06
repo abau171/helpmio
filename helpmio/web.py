@@ -95,16 +95,22 @@ class QuestionWebSocketHandler(tornado.websocket.WebSocketHandler):
     
     @_inject_sessions
     def open(self, qid):
+        if "nickname" in self.session:
+            self._nickname = self.session["nickname"]
+        else:
+            self._nickname = None
+        print(self._nickname)
         question = helpmio.question.get_question(qid)
         self._chatroom = question.get_chatroom()
-        self._connection_id = self._chatroom.connect(self)
+        self._connection_id = self._chatroom.connect(self._nickname)
         self._connect_cid = self._chatroom.on_connect.subscribe(self.connect_recieved)
         self._disconnect_cid = self._chatroom.on_disconnect.subscribe(self.disconnect_recieved)
         self._chat_cid = self._chatroom.on_chat.subscribe(self.chat_recieved)
         userlist = [{"connection_id": connection_id,
-                     "nickname": connection_id,
+                     "nickname": nickname,
                      "is_asker": False}
-                     for connection_id in question.get_chatroom().get_connected_users()]
+                     for connection_id, nickname in question.get_chatroom().get_connected_users().items()
+                     if nickname != None]
         chat_history = self._chatroom.get_chat_history()
         message = {"type": "curstate", "data": {"userlist": userlist, "history": chat_history}}
         self.write_message(json.dumps(message))
@@ -114,7 +120,10 @@ class QuestionWebSocketHandler(tornado.websocket.WebSocketHandler):
         message_type = message_obj["type"]
         data = message_obj["data"]
         if message_type == "message":
-            self._chatroom.add_chat(self._connection_id, data)
+            if self._nickname != None:
+                self._chatroom.add_chat(self._connection_id, data)
+            else:
+                print("user cannot send message without nickname")
         else:
             print("invalid client message type: '{}'".format(message_type))
 
@@ -125,14 +134,20 @@ class QuestionWebSocketHandler(tornado.websocket.WebSocketHandler):
         self._chatroom.disconnect(self._connection_id)
 
     def connect_recieved(self, connected_id):
-        message = {"type": "connect", "data": {"connection_id": connected_id, "nickname": connected_id, "is_asker": False}}
-        self.write_message(json.dumps(message))
+        nickname = self._chatroom.get_user(connected_id)
+        if nickname != None:
+            message = {"type": "connect", "data": {"connection_id": connected_id, "nickname": nickname, "is_asker": False}}
+            self.write_message(json.dumps(message))
 
     def disconnect_recieved(self, disconnected_id):
-        message = {"type": "disconnect", "data": {"connection_id": disconnected_id}}
-        self.write_message(json.dumps(message))
+        nickname = self._chatroom.get_user(connection_id)
+        if nickname != None:
+            message = {"type": "disconnect", "data": {"connection_id": disconnected_id}}
+            self.write_message(json.dumps(message))
 
     def chat_recieved(self, chat):
         sender_connection_id, text = chat
-        message = {"type": "message", "data": {"connection_id": sender_connection_id, "message": text}}
-        self.write_message(json.dumps(message))
+        nickname = self._chatroom.get_user(sender_connection_id)
+        if nickname != None:
+            message = {"type": "message", "data": {"connection_id": sender_connection_id, "message": text}}
+            self.write_message(json.dumps(message))

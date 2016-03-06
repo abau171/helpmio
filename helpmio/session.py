@@ -19,6 +19,15 @@ class Session:
     def __setitem__(self, key, value):
         self._data[key] = value
 
+    def __delitem__(self, key):
+        del self._data[key]
+
+    def __contains__(self, key):
+        return key in self._data
+
+    def __missing__(self, key):
+        return key not in self._data
+
 
 class _SessionManager:
 
